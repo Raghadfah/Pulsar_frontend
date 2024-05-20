@@ -1,8 +1,44 @@
+body, h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.name-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* background: linear-gradient(to bottom right, #000428, #004e92);  */
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.name-title {
+  font-size: 6rem; 
+  font-weight: bold; 
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2); 
+  background: linear-gradient(to right, #a81365, #f09819); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  text-align: center;
+  animation: glow 1.5s ease-in-out infinite alternate; 
+}
+
+@keyframes glow {
+  from {
+      text-shadow: 0 0 10px #a81365, 0 0 20px #a81365, 0 0 30px #f09819, 0 0 40px #f09819, 0 0 50px #f09819;
+  }
+  to {
+      text-shadow: 0 0 20px #a81365, 0 0 30px #a81365, 0 0 40px #f09819, 0 0 50px #f09819, 0 0 60px #f09819;
+  }
+}
+
 #root {
   max-width: 1880px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background: linear-gradient(to bottom right, #000428, #004e92); 
 }
 
 .logo {
@@ -38,5 +74,43 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: #f6e8e8;
 }
+.nav {
+
+  /* background-color: #f7efef; */
+  /* color: white; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  
+  }
+  
+  ul {
+  
+  list-style-type: none;
+  
+  margin: 0;
+  
+  padding: 0;
+  
+  }
+  
+  li {
+  
+  display: inline;
+  
+  margin-right: 20px;
+  justify-content: center;
+  
+  }
+  
+  a {
+  
+  color: #fff;
+  
+  text-decoration: none;
+  
+  }
+  
