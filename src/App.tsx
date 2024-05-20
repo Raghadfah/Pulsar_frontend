@@ -8,7 +8,7 @@ import { createContext, useState } from "react"
 import { Product } from "./types"
 import { Dashboard } from "./pages/dashboard"
 import { LogIn } from "lucide-react"
-import { SignUp } from "./pages/signup"
+import { Signup } from "./pages/signup"
 
 const router = createBrowserRouter([
   {
@@ -21,10 +21,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <SignUp />
+    element: <Signup />
   },
   {
-    path: "/products/:id",
+    path: "/products/:productId",
     element: <ProductDetails />
   },
   {

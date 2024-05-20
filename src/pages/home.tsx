@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import api from "@/api"
 import { Hero } from "@/components/ui/hero"
 import {NavBar} from "@/components/ui/navbar"
+import { Link } from "react-router-dom"
 
 
 export function Home() {
@@ -47,12 +48,14 @@ export function Home() {
               <img alt= {product.name} src= {product.image}/>
               <CardTitle>{product.name}</CardTitle>
               <CardDescription>{product.description}</CardDescription>
-             
             </CardHeader>
             <CardContent>
               <p>{product.price} $</p>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex justify-between">
+              <Button className= "m-8"variant="outline">
+                <Link to={`/products/${product.id}`}>Details</Link>
+              </Button>
             <Button className="w-full" onClick={() => handleAddToCart(product)}>
                 Add to cart
               </Button>
