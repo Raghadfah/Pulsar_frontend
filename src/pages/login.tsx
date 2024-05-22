@@ -1,15 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import jwt from "jwt-decode"
 
 
 import api from "@/api";
+import { Context } from "@/App";
+import { reshapeUser } from "@/lib/utils";
 
 
 
 export function Login(){
   const navigate = useNavigate()
+  const context = useContext(Context)
+  if (!context) throw Error("Context is missing")
+  const { handleStoreUser } = context
+
   const [user, setUser] = useState({
     email: "",
     password: ""
@@ -37,7 +44,12 @@ export function Login(){
       e.preventDefault()
       const token = await handleLogin()
       if (token) {
+        const decodedToken = jwt(token)
+        const user = reshapeUser(decodedToken)
         localStorage.setItem("token", token)
+        localStorage.setItem("user", JSON.stringify(user))
+  
+        handleStoreUser(user)
         navigate("/")
       }
     }

@@ -66,7 +66,6 @@ export function ProductDetails() {
                   <SelectItem value="2">2</SelectItem>
                   <SelectItem value="3">3</SelectItem>
                   <SelectItem value="4">4</SelectItem>
-                  <SelectItem value="5">5</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -86,22 +85,12 @@ export function ProductDetails() {
       <section className="w-full py-12">
         <div className="container grid gap-6 md:gap-8 px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-            <div className="grid gap-1">
-              <h1 className="text-2xl font-bold tracking-tight">People also like</h1>
-            </div>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             <div className="relative group">
               <Link className="absolute inset-0 z-10" to="">
                 <span className="sr-only">View</span>
               </Link>
-              <img
-                alt="Cozy Blanket"
-                className="rounded-lg object-cover w-full aspect-square group-hover:opacity-50 transition-opacity"
-                height={200}
-                src="/placeholder.svg"
-                width={200}
-              />
             </div>
           </div>
         </div>

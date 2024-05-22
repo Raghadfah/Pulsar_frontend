@@ -1,34 +1,45 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select"
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createContext, useState } from "react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { ChangeEvent, useState } from "react"
+import ProductService from "@/api/products"
+import CategoryService from "@/api/categories"
 
 import api from "@/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Product } from "@/types"
-import { Context } from "@/App"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
+import { Category, Product, User } from "@/types"
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table"
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@radix-ui/react-alert-dialog"
 import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog"
 import { EditDialog } from "@/components/ui/editDialog"
-
 
 export function Dashboard() {
   const queryClient = useQueryClient()
   const [product, setProduct] = useState({
     name: "",
+    id:"",
+    quantity:0,
     categoryId: "",
     image: "",
     price: "",
-    description:"",
+    description: ""
   })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -37,100 +48,100 @@ export function Dashboard() {
       [name]: value
     })
   }
-  const postProduct = async () => {
-    try {
-      const res = await api.post("/products", product)
-      return res.data
-    } catch (error) {
-      console.error(error)
-      return Promise.reject(new Error("Something went wrong"))
-    }
-  }
-//   const handleReset = async () =>
-//   {
-// setProduct({
-//   name: "",
-//   categoryId: "",
-//   image: "",
-//   price: "",
-//   description:"",
-// })
-//   }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await postProduct()
+    await ProductService.createOne(product)
     queryClient.invalidateQueries({ queryKey: ["products"] })
-}
-  const deleteProduct = async (productId: string) => {
+  }
+  const handleDeleteProduct = async (productId: string) => {
+    const hasConfirmed = confirm("Do you really want to delete?")
+    hasConfirmed && (await ProductService.deleteOne(productId))
+    // await deleteProduct(productId)
+    queryClient.invalidateQueries({ queryKey: ["products"] })
+  }
+  const getUsers = async () => {
     try {
-      const res = await api.delete(`/products/${productId}`)
-      return res.data
-    } catch (error) {
-      console.error(error)
-      return Promise.reject(new Error("Something went wrong"))
-    }}
-    const handleDeleteProduct = async (productId: string) => {
-      await deleteProduct(productId)
-      queryClient.invalidateQueries({ queryKey: ["products"] })
-    }
-  const getProducts = async () => {
-    try {
-      const res = await api.get("/products")
+      const token = localStorage.getItem("token")
+      const res = await api.get("/users", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       return res.data
     } catch (error) {
       console.error(error)
       return Promise.reject(new Error("Something went wrong"))
     }
   }
-  const {
-    isPending,
-    data: products,
-  } = useQuery<Product[]>({
-    queryKey: ["Products"],
-    queryFn: getProducts
+  const { data: products, error } = useQuery<Product[]>({
+    queryKey: ["products"],
+    queryFn: ProductService.getAll
   })
-  if (isPending) {
-    return <p>Data is fetching.....</p>
+  const { data: categories, error: catError } = useQuery<Category[]>({
+    queryKey: ["categories"],
+    queryFn: CategoryService.getAll
+  })
+  const { data: users, error: userError } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: getUsers
+  })
+
+  const productWithCat = products?.map((product) => {
+    const category = categories?.find((cat) => cat.id === product.categoryId)
+
+    if (category) {
+      return {
+        ...product,
+        categoryId: category.name
+      }
+    }
+    return product
+  })
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    setProduct({
+      ...product,
+      categoryId: e.target.value
+    })
   }
-
-
-return (
-  <>
-    {/* <Select title="product" name="products">
-        <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a product" />
-        </SelectTrigger>
-        <SelectContent>
-            <SelectItem>
-                <SelectLabel>Products</SelectLabel>
-                {data?.map((product) => {
-                    return <SelectItem key={product.id} value="apple" onChange={onChange}>{product.name}</SelectItem>;
-                })}
-            </SelectItem>
-        </SelectContent>
-    </Select> */}
-    <form className="mt-20 w-1/3 mx-auto" onSubmit={handleSubmit}>
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">Add new product</h3>
-      <Input name="name" className="mt-4" type="text" placeholder="Name" onChange={handleChange} />
-      <Input
-        name="categoryId"
-        className="mt-4"
-        type="text"
-        placeholder="Category"
-        onChange={handleChange}
-      />
-      <div className="flex justify-between">
-        <Button className="mt-4" type="reset" variant="secondary">
-          Reset
-        </Button>
-        <Button className="mt-4" type="submit" variant="secondary">
-          Submit
-        </Button>
-      </div>
-    </form>
-    <div>
-      <h1>Product</h1>
-      <Table>
+  return (
+    <>
+      <form className="mt-20 w-1/3 mx-auto" onSubmit={handleSubmit}>
+        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">Add new product</h3>
+        <select name="cats" onChange={handleSelect}>
+          {categories?.map((cat) => {
+            return (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            )
+          })}
+        </select>
+        <Input
+          name="name"
+          className="mt-4"
+          type="text"
+          placeholder="Name"
+          onChange={handleChange}
+        />
+        <Input
+          name="categoryId"
+          className="mt-4"
+          type="text"
+          placeholder="Category"
+          onChange={handleChange}
+        />
+        <div className="flex justify-between">
+          <Button className="mt-4" type="reset" variant="secondary">
+            Reset
+          </Button>
+          <Button className="mt-4" type="submit" variant="secondary">
+            Submit
+          </Button>
+        </div>
+      </form>
+      <div>
+        <h1>Product</h1>
+        <Table>
           <TableCaption>A list of your recent products</TableCaption>
           <TableHeader>
             <TableRow>
@@ -139,11 +150,11 @@ return (
               <TableHead className="text-center">CategoryId</TableHead>
               <TableHead className="text-center">Image</TableHead>
               <TableHead className="text-center">Price</TableHead>
-              <TableHead className="text-center"></TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products?.map((product) => (
+          {productWithCat?.map((product) => (
               <TableRow key={product.id}>
                 <TableCell className="font-medium"></TableCell>
                 <TableCell className="text-center">{product.name}</TableCell>
@@ -164,12 +175,13 @@ return (
                         Are you sure you want to delete? {product.name}?
                       </AlertDialogTitle>
                       <AlertDialogDescription>
-                      This action cannot be undone. Deleting your product will permanently remove all associated data from our servers.
+                        This action cannot be undone. Deleting your product will permanently remove
+                        all associated data from our servers.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={() => handleDeleteProduct (product.id)}>
+                      <AlertDialogAction onClick={() => handleDeleteProduct(product.id)}>
                         Continue
                       </AlertDialogAction>
                     </AlertDialogFooter>
@@ -184,6 +196,6 @@ return (
           </TableBody>
         </Table>
       </div>
-  </>
-)
+    </>
+  )
 }
