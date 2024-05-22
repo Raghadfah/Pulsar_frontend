@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
+import { ChangeEvent, FormEvent, useState } from "react"
+
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import api from "../api"
-import { ChangeEvent, FormEvent, useState } from "react"
 
 export function Signup() {
   const navigate = useNavigate()

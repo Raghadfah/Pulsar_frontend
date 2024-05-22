@@ -1,22 +1,20 @@
 
 import {Link, useSearchParams} from "react-router-dom"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { MenuIcon, MountainIcon, SearchIcon, ShoppingCartIcon } from "lucide-react"
-import { Cart } from "./cart"
+import { MenuIcon, SearchIcon } from "lucide-react"
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
-import { Context } from "@/App"
-import { Product, ROLE } from "@/types"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Product, ROLE } from "@/types"
 import api from "@/api"
+import { Cart } from "./cart"
+import { Context } from "@/App"
 
 export function NavBar() {
   const context = useContext(Context)
   if (!context) throw Error("Context is missing")
-  const { state } = context
-
-  console.log(state)
+  const { state, handleRemoveUser } = context
 
   const queryClient = useQueryClient()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -36,7 +34,16 @@ export function NavBar() {
     queryKey: ["products"],
     queryFn: getProducts
   })
+  const handleLogout = () => {
+    if (typeof window !== undefined) {
+      window.location.reload()
+    }
 
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+
+    handleRemoveUser()
+  }
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     setSearchBy(value)
@@ -70,6 +77,11 @@ export function NavBar() {
           )}
           {!state.user && (
               <Link to="/login">Login</Link>
+          )}
+          {state.user && (
+            <Link to="\" onClick={handleLogout}>
+              Logout
+            </Link>
           )}
         </nav>
         <div className="flex items-center gap-4">

@@ -1,14 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt from "jwt-decode"
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 
-
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import api from "@/api";
 import { Context } from "@/App";
 import { reshapeUser } from "@/lib/utils";
-
 
 
 export function Login(){

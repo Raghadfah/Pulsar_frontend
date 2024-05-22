@@ -42,6 +42,7 @@ type GlobalContextType = {
   handleDeleteFromCart: (id: string) => void
   handleStoreUser: (user: DecodedUser) => void
   handleRemoveCart: () => void
+  handleRemoveUser: () => void
 }
 type GlobalState = {
   cart: Product[]
@@ -66,8 +67,6 @@ function App() {
   }, [])
 
   const handleAddToCart = (product: Product) => {
-    const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
-    if (isDuplicated) return
     setState({
       ...state,
       cart: [...state.cart, product]
@@ -82,7 +81,7 @@ function App() {
       cart: cart
     })
   }
-  const handleRemoveCart = (id: string) => {
+  const handleRemoveCart = () => {
     setState({
       ...state,
       cart: []
@@ -94,10 +93,17 @@ function App() {
       user
     })
   }
+  const handleRemoveUser = () => {
+    setState({
+      ...state,
+      user: null
+    })
+  }
+
   return (
     <div className="App">
       <Context.Provider 
-      value={{ state, handleAddToCart, handleDeleteFromCart, handleStoreUser, handleRemoveCart }}>
+      value={{ state, handleAddToCart, handleDeleteFromCart, handleStoreUser, handleRemoveCart, handleRemoveUser }}>
         <RouterProvider router={router} />
       </Context.Provider>
     </div>

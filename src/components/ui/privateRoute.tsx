@@ -2,7 +2,6 @@ import { ReactElement } from "react"
 import jwt from "jwt-decode"
 import { Navigate } from "react-router-dom"
 
-
 import { ROLE } from "@/types"
 import { reshapeUser } from "@/lib/utils"
 

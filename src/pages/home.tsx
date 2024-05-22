@@ -1,3 +1,13 @@
+import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { useQuery } from "@tanstack/react-query"
+
+import { Product } from "@/types"
+import { Context } from "@/App"
+import { Button } from "@/components/ui/button"
+import api from "@/api"
+import { Hero } from "@/components/ui/hero"
+import {NavBar} from "@/components/ui/navbar"
 import {
   Card,
   CardContent,
@@ -6,17 +16,6 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card"
-import { useContext } from "react"
-import { Context } from "@/App"
-
-
-import { Product } from "@/types"
-import { useQuery } from "@tanstack/react-query"
-import { Button } from "@/components/ui/button"
-import api from "@/api"
-import { Hero } from "@/components/ui/hero"
-import {NavBar} from "@/components/ui/navbar"
-import { Link } from "react-router-dom"
 
 
 export function Home() {

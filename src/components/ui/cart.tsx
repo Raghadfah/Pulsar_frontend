@@ -1,9 +1,9 @@
 import { useContext } from "react"
+import { ShoppingCartIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
+import { Link } from "react-router-dom"
 
 import { Context } from "@/App"
-import { ShoppingCartIcon } from "lucide-react"
-import { Link } from "react-router-dom"
 import { Badge } from "./badge"
 import { Button } from "./button"
 import { Product } from "@/types"

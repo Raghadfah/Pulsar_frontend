@@ -1,13 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { ChangeEvent, useState } from "react"
-import ProductService from "@/api/products"
-import CategoryService from "@/api/categories"
 
-import api from "@/api"
+import CategoryService from "@/api/categories"
+import ProductService from "@/api/products"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Category, Product, User } from "@/types"
-
+import api from "@/api"
 import {
   Table,
   TableBody,
@@ -17,7 +16,6 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,7 +36,7 @@ export function Dashboard() {
     quantity:0,
     categoryId: "",
     image: "",
-    price: "",
+    price: 0,
     description: ""
   })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +54,6 @@ export function Dashboard() {
   const handleDeleteProduct = async (productId: string) => {
     const hasConfirmed = confirm("Do you really want to delete?")
     hasConfirmed && (await ProductService.deleteOne(productId))
-    // await deleteProduct(productId)
     queryClient.invalidateQueries({ queryKey: ["products"] })
   }
   const getUsers = async () => {
