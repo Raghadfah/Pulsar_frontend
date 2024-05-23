@@ -94,6 +94,7 @@ export function Dashboard() {
     }
     return product
   })
+  
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     setProduct({
       ...product,

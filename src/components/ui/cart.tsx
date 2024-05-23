@@ -23,6 +23,7 @@ export function Cart() {
   if (!context) throw Error("Context is missing")
   const { state, handleDeleteFromCart, handleAddToCart, handleRemoveCart } = context
 
+  console.log(state.cart)
   const groups = state.cart.reduce((acc, obj) => {
     const key = obj.id
     const curGroup = acc[key] ?? []
@@ -68,9 +69,8 @@ export function Cart() {
       <PopoverTrigger asChild>
         <Link className="relative" to="#">
           <ShoppingCartIcon className="h-6 w-6" />
-          <span>({Object.keys(groups).length})</span>
           <Badge className="absolute -top-2 -right-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white">
-            {state.cart.length}
+            ({Object.keys(groups).length})
           </Badge>
         </Link>
       </PopoverTrigger>
@@ -92,9 +92,8 @@ export function Cart() {
                   className="w-10 h-10 object-contain"
                 ></img>
                 <h4>{product.name}</h4>
+                <span>({products.length})</span>
                 <span>{totalForOne}</span>
-                <Button onClick={handleCheckout}>Checkout</Button>
-                <Button variant="outline">Continue shopping</Button>
                 <Button onClick={() => handleAddToCart(product)}>+</Button>
                 <Button onClick={() => handleDeleteFromCart(product.id)}>-</Button>
               </div>
@@ -102,8 +101,10 @@ export function Cart() {
           })}
         </div>
         <p>Total: {total}</p>
+        <Link to="/">Continue shopping</Link>
         <Button onClick={handleCheckout}>Checkout</Button>
       </PopoverContent>
     </Popover>
   )
 }
+// for Telescpoe should not increase the quaninty because it has just one

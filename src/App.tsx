@@ -67,15 +67,20 @@ function App() {
   }, [])
 
   const handleAddToCart = (product: Product) => {
-    setState({
-      ...state,
-      cart: [...state.cart, product]
-    })
+    const products = state.cart.filter((p) => p.id === product.id)
+    const inStock = product.quantity > products.length
+    if (inStock) {
+      setState((prevState) => ({
+        ...prevState,
+        cart: [...prevState.cart, product]
+      }))
+    }
   }
   const handleDeleteFromCart = (id: string) => {
     const cart = state.cart
-    const index = state.cart.findIndex((item) => item.id !== id)
+    const index = cart.findIndex((item) => item.id === id)
     cart.splice(index, 1)
+
     setState({
       ...state,
       cart: cart
@@ -102,8 +107,16 @@ function App() {
 
   return (
     <div className="App">
-      <Context.Provider 
-      value={{ state, handleAddToCart, handleDeleteFromCart, handleStoreUser, handleRemoveCart, handleRemoveUser }}>
+      <Context.Provider
+        value={{
+          state,
+          handleAddToCart,
+          handleDeleteFromCart,
+          handleStoreUser,
+          handleRemoveCart,
+          handleRemoveUser
+        }}
+      >
         <RouterProvider router={router} />
       </Context.Provider>
     </div>

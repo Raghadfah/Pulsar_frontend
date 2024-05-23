@@ -11,10 +11,18 @@ import {
   Select
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-
+import { NavBar } from "@/components/ui/navbar"
+import { ChangeEvent, FormEvent, useContext, useState } from "react"
+import { Context } from "@/App"
+import { Product } from "@/types"
 
 export function ProductDetails() {
+  const context = useContext(Context)
+  if (!context) throw Error("Context is missing")
+  const { handleAddToCart } = context
+
   const { id } = useParams<string>()
+  const [selectedQuantity, setSelectedQuantity] = useState(1)
   console.log("id in product details ", id)
 
   const getProductById = async (id: string | undefined) => {
@@ -26,7 +34,7 @@ export function ProductDetails() {
       return Promise.reject(new Error("Something went wrong"))
     }
   }
-  const { data, isPending, isError,error } = useQuery({
+  const { data, isPending, isError, error } = useQuery<Product>({
     queryKey: ["products", id],
     queryFn: () => getProductById(id)
   })
@@ -39,8 +47,26 @@ export function ProductDetails() {
     return <span>Error: {error.message}</span>
   }
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    const quantities = [...Array(selectedQuantity).keys()]
+
+    quantities.map(() => {
+      console.log("RUNNING")
+      handleAddToCart(data)
+    })
+  }
+
+  const handleChange = (value: string) => {
+    setSelectedQuantity(Number(value))
+  }
+
+  const dividedBy4 = data.quantity < 10 ? 1 : Math.ceil(data.quantity / 4)
+  const availableQuantity = [...Array(dividedBy4).keys()]
+
   return (
     <>
+      <NavBar />
       <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
         <div className="grid gap-4 md:gap-10 items-start">
           <div className="grid gap-4">
@@ -52,20 +78,24 @@ export function ProductDetails() {
               <p>{data.description}</p>
             </div>
           </div>
-          <form className="grid gap-4 md:gap-10">
+          <form className="grid gap-4 md:gap-10" onSubmit={handleSubmit}>
             <div className="grid gap-2 justify-center">
               <Label className="text-base" htmlFor="quantity">
                 Quantity
               </Label>
-              <Select defaultValue="1">
+              <Select defaultValue="1" onValueChange={handleChange}>
                 <SelectTrigger className="w-24">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1">1</SelectItem>
-                  <SelectItem value="2">2</SelectItem>
-                  <SelectItem value="3">3</SelectItem>
-                  <SelectItem value="4">4</SelectItem>
+                  {availableQuantity.map((x) => {
+                    const value = ++x
+                    return (
+                      <SelectItem value={value.toString()} key={value}>
+                        {value}
+                      </SelectItem>
+                    )
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -84,8 +114,7 @@ export function ProductDetails() {
       </div>
       <section className="w-full py-12">
         <div className="container grid gap-6 md:gap-8 px-4 md:px-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-          </div>
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8"></div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             <div className="relative group">
               <Link className="absolute inset-0 z-10" to="">

@@ -1,5 +1,4 @@
-
-import {Link, useSearchParams} from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { MenuIcon, SearchIcon } from "lucide-react"
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
@@ -50,7 +49,12 @@ export function NavBar() {
   }
   const handleSearch = async (e: FormEvent) => {
     e.preventDefault()
-    setSearchParams({ ...searchParams, searchBy: searchBy })
+    if (searchBy) {
+      setSearchParams({ ...searchParams, searchBy: searchBy })
+    } else {
+      setSearchParams({ ...searchParams })
+    }
+
     queryClient.invalidateQueries({ queryKey: ["products"] })
   }
   return (
@@ -69,15 +73,9 @@ export function NavBar() {
           <Link className="text-sm font-medium hover:underline" to="#">
             Contact
           </Link>
-          {state.user?.role === ROLE.Admin && (
-              <Link to="/dashboard">Dashboard</Link>
-          )}
-          {!state.user && (
-              <Link to="/signup"> SignUp </Link>
-          )}
-          {!state.user && (
-              <Link to="/login">Login</Link>
-          )}
+          {state.user?.role === ROLE.Admin && <Link to="/dashboard">Dashboard</Link>}
+          {!state.user && <Link to="/signup"> SignUp </Link>}
+          {!state.user && <Link to="/login">Login</Link>}
           {state.user && (
             <Link to="\" onClick={handleLogout}>
               Logout
@@ -85,16 +83,20 @@ export function NavBar() {
           )}
         </nav>
         <div className="flex items-center gap-4">
-          <form  onSubmit={handleSearch} >
-          <div className="relative">
-            <Input value={searchBy} name="searchBy" onChange={handleChange}
-              className="pr-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
-              placeholder="Search..."
-              type="search"
-            />
-            <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          </div></form>
-          <Cart/>
+          <form onSubmit={handleSearch}>
+            <div className="relative">
+              <Input
+                value={searchBy}
+                name="searchBy"
+                onChange={handleChange}
+                className="pr-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
+                placeholder="Search..."
+                type="search"
+              />
+              <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div>
+          </form>
+          <Cart />
         </div>
       </div>
       <Button className="md:hidden" size="icon" variant="outline">
@@ -104,4 +106,3 @@ export function NavBar() {
     </header>
   )
 }
-
