@@ -27,6 +27,7 @@ import {
 } from "@radix-ui/react-alert-dialog"
 import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog"
 import { EditDialog } from "@/components/ui/editDialog"
+import { ManageUsers } from "@/components/ui/manageUsers"
 
 export function Dashboard() {
   const queryClient = useQueryClient()
@@ -194,6 +195,7 @@ export function Dashboard() {
           </TableBody>
         </Table>
       </div>
+      <ManageUsers/>
     </>
   )
 }

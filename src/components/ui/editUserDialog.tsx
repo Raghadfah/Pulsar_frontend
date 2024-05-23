@@ -3,26 +3,26 @@ import { ChangeEvent, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Product } from "@/types"
+import { User } from "@/types"
 import api from "@/api"
 
-export function EditDialog({ product }: { product: Product }) {
+export function EditUserDialog({ user }: { user: User }) {
   const queryClient = useQueryClient()
-  const [updatedProduct, setUpdatedProduct] = useState(product)
+  const [updatedUser, setUpdatedUser] = useState(user)
 
-  const updateProduct = async () => {
+  const updateUser = async () => {
     try {
-      const res = await api.patch(`/products/${updatedProduct.id}`, updatedProduct)
+      const res = await api.patch(`/users/${updatedUser.id}`, updatedUser)
       return res.data
     } catch (error) {
       console.error(error)
@@ -33,26 +33,26 @@ export function EditDialog({ product }: { product: Product }) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
 
-    setUpdatedProduct({
-      ...updatedProduct,
-      name: value,
+    setUpdatedUser({
+      ...updatedUser,
+      fullName: value,
     })
   }
 
   const handleUpdate = async () => {
-    await updateProduct()
-    queryClient.invalidateQueries({ queryKey: ["products"] })
+    await updateUser()
+    queryClient.invalidateQueries({ queryKey: ["users"] })
   }
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Product</Button>
+        <Button variant="outline">Edit User</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Product</DialogTitle>
+          <DialogTitle>Edit User</DialogTitle>
           <DialogDescription>
-          Edit your product here. Click save to apply changes.
+          Edit your user here. Click save to apply changes.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -62,7 +62,7 @@ export function EditDialog({ product }: { product: Product }) {
             </Label>
             <Input
               id="name"
-              defaultValue={updatedProduct.name}
+              defaultValue={updatedUser.fullName}
               className="col-span-3"
               onChange={handleChange}
             />

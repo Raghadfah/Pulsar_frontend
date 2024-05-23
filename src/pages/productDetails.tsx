@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { NavBar } from "@/components/ui/navbar"
-import { ChangeEvent, FormEvent, useContext, useState } from "react"
+import { FormEvent, useContext, useState } from "react"
 import { Context } from "@/App"
 import { Product } from "@/types"
 
@@ -52,7 +52,6 @@ export function ProductDetails() {
     const quantities = [...Array(selectedQuantity).keys()]
 
     quantities.map(() => {
-      console.log("RUNNING")
       handleAddToCart(data)
     })
   }
