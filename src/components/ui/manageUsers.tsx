@@ -23,7 +23,7 @@ import {
 } from "@radix-ui/react-alert-dialog"
 import { Button } from "@/components/ui/button"
 import { AlertDialogFooter, AlertDialogHeader } from "./alert-dialog"
-import UserService from "@/api/products"
+import UserService from "@/api/users"
 import { EditUserDialog } from "./editUserDialog"
 
 
@@ -37,6 +37,11 @@ export function ManageUsers() {
     role: ""
   })
 
+  const handleDeleteUser = async (userId: string) => {
+    const hasConfirmed = confirm("Do you really want to delete?")
+    hasConfirmed && (await UserService.deleteOne(userId))
+    queryClient.invalidateQueries({ queryKey: ["users"] })
+  }
   const getUsers = async () => {
     try {
       const token = localStorage.getItem("token")
@@ -55,11 +60,6 @@ export function ManageUsers() {
     queryKey: ["users"],
     queryFn: getUsers
   })
-  const handleDeleteUser = async (productId: string) => {
-    const hasConfirmed = confirm("Do you really want to delete?")
-    hasConfirmed && (await UserService.deleteOne(productId))
-    queryClient.invalidateQueries({ queryKey: ["users"] })
-  }
 
   return (
     <>
@@ -72,7 +72,7 @@ export function ManageUsers() {
             <TableHead className="text-center">Email</TableHead>
             <TableHead className="text-center">Phone</TableHead>
             <TableHead className="text-center">Role</TableHead>
-            <TableHead>Actions</TableHead>
+            {/* <TableHead>Actions</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,7 +103,7 @@ export function ManageUsers() {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => handleDeleteUser(user.fullName)}>
+                    <AlertDialogAction onClick={() => handleDeleteUser(user.id)}>
                       Continue
                     </AlertDialogAction>
                   </AlertDialogFooter>

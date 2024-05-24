@@ -180,9 +180,9 @@ export function Dashboard() {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={() => handleDeleteProduct(product.id)}>
+                      <AlertDialogAction onClick={() => handleDeleteProduct(product.id)}> 
                         Continue
-                      </AlertDialogAction>
+                      </AlertDialogAction> 
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
