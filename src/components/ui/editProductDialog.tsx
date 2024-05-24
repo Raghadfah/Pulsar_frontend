@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label"
 import { Product } from "@/types"
 import api from "@/api"
 
-export function EditDialog({ product }: { product: Product }) {
+export function EditProductDialog({ product }: { product: Product }) {
   const queryClient = useQueryClient()
   const [updatedProduct, setUpdatedProduct] = useState(product)
 

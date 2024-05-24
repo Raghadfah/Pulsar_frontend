@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/api"
@@ -25,9 +25,10 @@ import { Button } from "@/components/ui/button"
 import { AlertDialogFooter, AlertDialogHeader } from "./alert-dialog"
 import UserService from "@/api/users"
 import { EditUserDialog } from "./editUserDialog"
+import { Input } from "./input"
 
 
-export function ManageUsers() {
+export function DashboardUsers() {
   const queryClient = useQueryClient()
 
   const [user, setUser] = useState({
@@ -60,7 +61,6 @@ export function ManageUsers() {
     queryKey: ["users"],
     queryFn: getUsers
   })
-
   return (
     <>
       <Table>
@@ -72,7 +72,6 @@ export function ManageUsers() {
             <TableHead className="text-center">Email</TableHead>
             <TableHead className="text-center">Phone</TableHead>
             <TableHead className="text-center">Role</TableHead>
-            {/* <TableHead>Actions</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>

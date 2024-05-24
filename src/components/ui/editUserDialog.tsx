@@ -77,3 +77,6 @@ export function EditUserDialog({ user }: { user: User }) {
     </Dialog>
   )
 }
+/**
+ * Ask Yazan for the delete issues 
+ */
