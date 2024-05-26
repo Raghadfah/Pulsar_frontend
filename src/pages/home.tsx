@@ -16,6 +16,8 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card"
+import { Footer } from "@/components/ui/footer"
+// import { Banner } from "./banner"
 
 export function Home() {
   const context = useContext(Context)
@@ -39,8 +41,9 @@ export function Home() {
 
   return (
     <>
-      <NavBar />
-      <Hero />
+      <NavBar/>
+      {/* <Banner/> */}
+      <Hero/>
       <h2 className="text-2xl uppercase mb-10">Products</h2>
       <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
         {data?.map((product) => {
@@ -48,7 +51,8 @@ export function Home() {
           const inStock = product.quantity > products.length
 
           return (
-            <Card key={product.id} className="w-[350px]">
+            <div key={product.id} className="card">
+            <Card key={product.id} >
               <CardHeader>
                 <img alt={product.name} src={product.image} />
                 <CardTitle>{product.name}</CardTitle>
@@ -57,12 +61,12 @@ export function Home() {
               <CardContent>
                 <p>{product.price} $</p>
               </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button className="m-8" variant="outline">
+              <CardFooter>
+                <Button >
                   <Link to={`/products/${product.id}`}>Details</Link>
                 </Button>
                 <Button
-                  className="w-full"
+                 
                   disabled={!inStock}
                   onClick={() => handleAddToCart(product)}
                 >
@@ -70,10 +74,12 @@ export function Home() {
                 </Button>
               </CardFooter>
             </Card>
+            </div>
           )
         })}
       </section>
       {error && <p className="text-red-500">{error.message}</p>}
+      <Footer/>
     </>
   )
 }

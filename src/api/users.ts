@@ -28,5 +28,5 @@ export default {
         console.error(error)
         return Promise.reject(new Error("Something went wrong"))
       }
-    }
+    },
   }

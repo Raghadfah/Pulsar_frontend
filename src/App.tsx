@@ -9,6 +9,9 @@ import { Dashboard } from "./pages/dashboard"
 import { Signup } from "./pages/signup"
 import { PrivateRoute } from "./components/ui/privateRoute"
 import { Login } from "./pages/login"
+import { Profile } from "./pages/profile"
+import { AboutUs } from "./pages/aboutUs"
+import { ProductByCategory } from "./pages/productByCategory"
 
 const router = createBrowserRouter([
   {
@@ -34,7 +37,23 @@ const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     )
-  }
+  },
+  {
+    path: "/profile",
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    )
+  },
+  {
+    path: "/aboutUs",
+    element: <AboutUs />
+  },
+  {
+    path: "/products/section/:id",
+    element: <ProductByCategory />
+  },
 ])
 type GlobalContextType = {
   state: GlobalState
