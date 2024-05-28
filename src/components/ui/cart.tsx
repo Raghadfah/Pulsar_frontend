@@ -65,6 +65,8 @@ export function Cart() {
     }
   }
   return (
+    <>
+    <div className="cart">
     <Popover>
       <PopoverTrigger asChild>
         <Link className="relative" to="#">
@@ -102,9 +104,13 @@ export function Cart() {
         </div>
         <p>Total: {total}</p>
         <Link to="/">Continue shopping</Link>
+        <Link to="/checkOut">
         <Button onClick={handleCheckout}>Checkout</Button>
+        </Link>
       </PopoverContent>
     </Popover>
+    </div>
+    </>
   )
 }
-// for Telescpoe should not increase the quaninty because it has just one
+

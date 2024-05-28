@@ -4,6 +4,8 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import api from "../api"
+import { NavBar } from "@/components/ui/navbar"
+import { Footer } from "@/components/ui/footer"
 
 export function Signup() {
   const navigate = useNavigate()
@@ -44,6 +46,7 @@ export function Signup() {
 
   return (
     <div>
+      <NavBar />
       <h3>SIGNUP</h3>
       <form action="POST" onSubmit={handleSubmit} className="w-full md:w-1/3 mx-auto">
         <Input
@@ -81,6 +84,7 @@ export function Signup() {
           </Button>
         </div>
       </form>
+      <Footer />
     </div>
   )
 }

@@ -39,6 +39,11 @@ export function DashboardProduct() {
     price: 0,
     description: ""
   })
+
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
   const postProduct = async () => {
     try {
       const res = await api.post("/products", product)
@@ -57,16 +62,45 @@ export function DashboardProduct() {
   }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await ProductService.createOne(product)
-    await postProduct()
-    await handleReset()
-    queryClient.invalidateQueries({ queryKey: ["products"] })
-  }
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+    try {
+      await ProductService.createOne(product);
+      await postProduct();
+      setSuccess("Product added successfully!");
+      await handleReset();
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    } catch (err) {
+      setError("Failed to add product.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
   const handleDeleteProduct = async (productId: string) => {
-    const hasConfirmed = confirm("Do you really want to delete?")
-    hasConfirmed && (await ProductService.deleteOne(productId))
-    queryClient.invalidateQueries({ queryKey: ["products"] })
-  }
+    const hasConfirmed = confirm("Do you really want to delete?");
+    if (hasConfirmed) {
+      setLoading(true);
+      setError(null);
+      setSuccess(null);
+      try {
+        await ProductService.deleteOne(productId);
+        setSuccess("Product deleted successfully!");
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+      } catch (err) {
+        setError("Failed to delete product.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+
+
+
   const getProducts = async () => {
     try {
       const token = localStorage.getItem("token")
@@ -81,18 +115,20 @@ export function DashboardProduct() {
       return Promise.reject(new Error("Something went wrong"))
     }
   }
-  const { data: products, error } = useQuery<Product[]>({
+
+
+  const { data: products, error: productsError } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: ProductService.getAll
-  })
+  });
   const { data: categories, error: catError } = useQuery<Category[]>({
     queryKey: ["categories"],
     queryFn: CategoryService.getAll
-  })
+  });
   const { data: users, error: userError } = useQuery<User[]>({
     queryKey: ["users"],
     queryFn: getProducts
-  })
+  });
 
   const productWithCat = products?.map((product) => {
     const category = categories?.find((cat) => cat.id === product.categoryId)
@@ -126,8 +162,10 @@ export function DashboardProduct() {
   return (
     <>
       <form className="w-1/2 mx-auto" onSubmit={handleSubmit}>
-      <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Add new product</h3>
-        <select name="cats" onChange={handleSelect}>
+        <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+          Add new product
+        </h3>
+        <select className="custom-select" onChange={handleSelect}>
           {categories?.map((cat) => {
             return (
               <option key={cat.id} value={cat.id}>
@@ -184,7 +222,7 @@ export function DashboardProduct() {
           onChange={handleChange}
           value={product.price}
         />
-       <div className="flex justify-evenly">
+        <div className="flex justify-evenly">
           <Button className="mt-5 mx-1 w-2/3" type="submit">
             Add
           </Button>
@@ -193,6 +231,10 @@ export function DashboardProduct() {
           </Button>
         </div>
       </form>
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
+
       <div>
         <h1>Product</h1>
         <Table>

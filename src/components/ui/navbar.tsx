@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom"
-import { MenuIcon, SearchIcon } from "lucide-react"
+import { MenuIcon, SearchIcon, TelescopeIcon } from "lucide-react"
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import CategoryService from "@/api/categories"
@@ -43,10 +43,6 @@ export function NavBar() {
     queryFn: getProducts
   })
   const handleLogout = () => {
-    if (typeof window !== undefined) {
-      window.location.reload()
-    }
-
     localStorage.removeItem("token")
     localStorage.removeItem("user")
 
@@ -118,17 +114,7 @@ export function NavBar() {
                 size="icon"
                 variant="ghost"
               >
-                <img
-                  alt="Avatar"
-                  className="rounded-full"
-                  height="32"
-                  src="https://img.freepik.com/premium-vector/avatar-profile-vector-illustrations-website-social-networks-user-profile-icon_495897-224.jpg"
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover"
-                  }}
-                  width="32"
-                />
+               <TelescopeIcon  className="rounded-full" h-6 text-white />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -156,7 +142,6 @@ export function NavBar() {
                 value={searchBy}
                 name="searchBy"
                 onChange={handleChange}
-                // className="pr-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
                 placeholder="Search..."
                 type="search"
               />
@@ -173,6 +158,4 @@ export function NavBar() {
     </header>
   )
 }
-/**
- * Ask Yazan for the logout issus
- */
+

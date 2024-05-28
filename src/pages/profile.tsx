@@ -1,77 +1,7 @@
-// import React, { useState, useEffect, useContext } from "react"
-// import { useQueryClient } from "@tanstack/react-query"
-
-// import api from "@/api"
-// import { Input } from "../components/ui/input"
-// import { Button } from "../components/ui/button"
-// import { Context } from "@/App"
-
-// const ProfilePage = () => {
-//   const context = useContext(Context)
-//   const { state, handelUserUpdateSubmit } = context
-
-//   const queryClient = useQueryClient()
-//   const [user, setUser] = useState({
-//     firstName: "",
-//     lastName: ""
-//   })
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target
-//     setUser((prevState) => ({ ...prevState, [name]: value }))
-    
-//   }
-//   const handelUserUpdateSubmit = async () => {
-//     const newUserInfo = await updateUser(user)
-//     const updatedUserInfo = {
-//       ...state.userInfo,
-//       firstName: newUserInfo.firstName,
-//       lastName: newUserInfo.lastName,
-//       phone: newUserInfo.phone
-//     }
-
-//     localStorage("userInfo", updatedUserInfo)
-//     dispatch({
-//       type: "updateUser",
-//       payload: updatedUserInfo
-//     })
-//   }
-//   const updateUser = async (user: any) => {
-//     try {
-//       const res = await api.put(`/users/${state.user.id}`, user, {
-//         headers: { Authorization: `Bearer ${state.userInfo.token}` }
-//       })
-//       return res.data
-//     } catch (error) {
-//       console.error(error)
-//       return Promise.reject(new Error("Something went wrong"))
-//     }
-//   }
-
-//   return (
-//     <div className="profile-page">
-//       <h1>Profile</h1>
-//       <div className="profile-form">
-//         <label>
-//           First Name:
-//           <Input name="firstName" value={user.firstName} onChange={handleInputChange} />
-//         </label>
-//         <label>
-//           Last Name:
-//           <Input name="lastName" value={user.lastName} onChange={handleInputChange} />
-//         </label>
-//         <Button>Edit</Button>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default ProfilePage
-
-
-
-
+import { ChangeEvent, useContext, useState } from "react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-// import { Link } from "react-router-dom"
+
 import {
   CardTitle,
   CardDescription,
@@ -86,18 +16,129 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { NavBar } from "@/components/ui/navbar"
+import api from "@/api"
+import { Address, User } from "@/types"
+import { Context } from "@/App"
+import { Separator } from "@/components/ui/separator"
+import { Footer } from "@/components/ui/footer"
+
+
 export function Profile() {
+  const context = useContext(Context)
+  if (!context) throw Error("context is missing ")
+  const { state } = context
+
+  const queryClient = useQueryClient()
+
+  const [updatedUser, setUpdatedUser] = useState({
+    id: "",
+    email: "",
+    fullName: "",
+    phone: "",
+    role: "Customer"
+  })
+
+  const findUser = async () => {
+    try {
+      const res = await api.get(`/users/${state.user?.nameidentifier}`)
+      setUpdatedUser(res.data)
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+  const { data: user } = useQuery<User>({
+    queryKey: ["users"],
+    queryFn: findUser
+  })
+  const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    console.log(name, value)
+
+    setUpdatedUser({ ...updatedUser, [name]: value })
+  }
+
+  const patchUser = async () => {
+    try {
+      const res = await api.patch(`/users/${state.user?.nameidentifier}`, updatedUser)
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+  const handleUpdateUser = async () => {
+    await patchUser()
+    queryClient.invalidateQueries({ queryKey: ["users"] })
+  }
+
+  const [address, setAddress] = useState({
+    country: "",
+    city: "",
+    street: "",
+    zip_code: 0
+  })
+
+  const postAddress = async () => {
+    try {
+      const token = localStorage.getItem("token")
+      const res = await api.post("/addresses", address, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    console.log(name, value)
+    setAddress({ ...address, [name]: value })
+  }
+  const handleReset = async () => {
+    setAddress({
+      country: "",
+      city: "",
+      street: "",
+      zip_code: 0
+    })
+  }
+  const handleAddressSubmit = async () => {
+    await postAddress()
+    await handleReset()
+    queryClient.invalidateQueries({ queryKey: ["addresses"] })
+  }
+
+  const getAddressesById = async (id: string | undefined) => {
+    try {
+      const res = await api.get(`/addresses/user/${id}`)
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+
+  const { data: addresses } = useQuery<Address[]>({
+    queryKey: ["products", user?.id],
+    queryFn: () => getAddressesById(user?.id)
+  })
+
   return (
     <>
-    <NavBar/>
+      <NavBar />
       <div className="flex flex-col items-center justify-center gap-6 px-4 py-12 md:px-6 lg:flex-row lg:gap-12">
         <div className="flex flex-col items-center gap-4">
           <Avatar className="h-24 w-24 border-4 border-gray-100 dark:border-gray-800">
             <AvatarImage alt="User Avatar" src="/placeholder-user.jpg" />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarFallback>{user?.fullName}</AvatarFallback>
           </Avatar>
           <div className="text-center lg:text-left">
-            <h1 className="text-2xl font-bold">John Doe</h1>
+            <h1 className="text-2xl font-bold">{user?.fullName}</h1>
             <p className="text-gray-500 dark:text-gray-400">Plant enthusiast and nature lover</p>
           </div>
         </div>
@@ -120,15 +161,45 @@ export function Profile() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Enter your name" />
+                <Input
+                  id="name"
+                  name="fullName"
+                  defaultValue={user?.fullName}
+                  placeholder="Enter your name"
+                  onChange={handleUserChange}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" placeholder="Enter your email" type="email" />
+                <Input
+                  id="email"
+                  name="email"
+                  defaultValue={user?.email}
+                  placeholder="Enter your email"
+                  type="email"
+                  onChange={handleUserChange}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" placeholder="Enter your password" type="password" />
+                <Input
+                  disabled
+                  name="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  type="password"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone</Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  defaultValue={user?.phone}
+                  placeholder="Enter your phone number"
+                  type="text"
+                  onChange={handleUserChange}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="bio">Bio</Label>
@@ -136,61 +207,100 @@ export function Profile() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="ml-auto">Save</Button>
+              <Button className="ml-auto" onClick={handleUpdateUser}>
+                Save
+              </Button>
             </CardFooter>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Notifications</CardTitle>
-              <CardDescription>Manage your notification preferences.</CardDescription>
+              <CardTitle>Address</CardTitle>
+              <CardDescription>Add address information to your account.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <Switch id="email-notifications" />
-                <Label htmlFor="email-notifications">Email Notifications</Label>
+              <div className="space-y-2">
+                <Label htmlFor="country">Country</Label>
+                <Input
+                  defaultValue={address.country}
+                  onChange={handleAddressChange}
+                  id="country"
+                  name="country"
+                  type="text"
+                  placeholder="Enter your country"
+                />
               </div>
-              <div className="flex items-center space-x-2">
-                <Switch id="push-notifications" />
-                <Label htmlFor="push-notifications">Push Notifications</Label>
+              <div className="space-y-2">
+                <Label htmlFor="city">City</Label>
+                <Input
+                  defaultValue={address.city}
+                  onChange={handleAddressChange}
+                  id="city"
+                  name="city"
+                  placeholder="Enter your city"
+                  type="text"
+                />
               </div>
-              <div className="flex items-center space-x-2">
-                <Switch id="sms-notifications" />
-                <Label htmlFor="sms-notifications">SMS Notifications</Label>
+              <div className="space-y-2">
+                <Label htmlFor="street">Street</Label>
+                <Input
+                  defaultValue={address.street}
+                  onChange={handleAddressChange}
+                  id="street"
+                  name="street"
+                  placeholder="Enter your street"
+                  type="text"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="zip_code">Zip-code</Label>
+                <Input
+                  defaultValue={address.zip_code}
+                  onChange={handleAddressChange}
+                  id="zip_code"
+                  name="zip_code"
+                  placeholder="Enter your zip_code"
+                  type="number"
+                />
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="ml-auto">Save</Button>
+              <Button className="ml-auto" onClick={handleAddressSubmit}>
+                Add
+              </Button>
             </CardFooter>
           </Card>
+
           <Card>
             <CardHeader>
               <CardTitle>Security</CardTitle>
               <CardDescription>Manage your account security settings.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
+              <div className="space-y-2 ">
                 <Label htmlFor="two-factor-auth">Two-Factor Authentication</Label>
-                <div className="flex items-center space-x-2">
-                  <Switch id="two-factor-auth" />
+                <div className="flex flex-col gap-4 items-center space-x-2">
                   <span className="text-gray-500 dark:text-gray-400">
                     Enhance your account security
                   </span>
+                  <Switch id="two-factor-auth" />
                 </div>
               </div>
+              <Separator />
               <div className="space-y-2">
                 <Label htmlFor="login-history">Login History</Label>
-                <div className="flex items-center space-x-2">
-                  <Button size="sm" variant="outline">
-                    View History
-                  </Button>
+                <div className="flex flex-col items-center gap-4 space-x-2">
                   <span className="text-gray-500 dark:text-gray-400">
                     See your recent login activity
                   </span>
+                  <Button size="sm" variant="outline">
+                    View History
+                  </Button>
                 </div>
               </div>
+              <Separator />
               <div className="space-y-2">
                 <Label htmlFor="delete-account">Delete Account</Label>
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-col gap-4 items-center space-x-2">
                   <Button size="sm" variant="destructive">
                     Delete Account
                   </Button>
@@ -202,7 +312,37 @@ export function Profile() {
             </CardContent>
           </Card>
         </div>
+        <Separator />
+        <h1 className="text-2xl text-start font-bold">Your Addresses</h1>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {addresses?.map((address) => {
+            console.log(address)
+
+            return (
+              <Card key={address.id}>
+                <CardHeader>
+                  <CardTitle className="text-start">Address</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 text-start">
+                  <div className="space-y-2">
+                    <Label htmlFor="country">Country : {address.country}</Label>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="city">City : {address.city}</Label>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="street">Street: {address.street}</Label>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="zip_code">Zip-code: {address.zip_code}</Label>
+                  </div>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
       </div>
+      <Footer />
     </>
   )
 }

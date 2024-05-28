@@ -12,6 +12,8 @@ import { Login } from "./pages/login"
 import { Profile } from "./pages/profile"
 import { AboutUs } from "./pages/aboutUs"
 import { ProductByCategory } from "./pages/productByCategory"
+import CheckOut from "./pages/checkout"
+import ThankYou from "./pages/thankYou"
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
   {
     path: "/products/section/:id",
     element: <ProductByCategory />
+  },
+  {
+    path: "/checkOut",
+    element: <CheckOut />
+  },
+  {
+    path: "/thankYou",
+    element: <ThankYou />
   },
 ])
 type GlobalContextType = {

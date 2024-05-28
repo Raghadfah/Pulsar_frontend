@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import api from "@/api";
 import { Context } from "@/App";
 import { reshapeUser } from "@/lib/utils";
+import { NavBar } from "@/components/ui/navbar";
+import { Footer } from "@/components/ui/footer";
 
 
 export function Login(){
@@ -53,6 +55,7 @@ export function Login(){
     }
     return (
       <div>
+        <NavBar/>
         <h3>LOGIN</h3>
         <form action="POST" className="w-full md:w-1/3 mx-auto" onSubmit={handleSubmit}>
           <Input
@@ -76,6 +79,7 @@ export function Login(){
             </Button>
           </div>
         </form>
+        <Footer/>
       </div>
     )
   }

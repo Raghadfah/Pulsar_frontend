@@ -2,6 +2,7 @@ import { Context } from "@/App"
 import api from "@/api"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { NavBar } from "@/components/ui/navbar"
 import { Product } from "@/types"
 import { useQuery } from "@tanstack/react-query"
 import { useContext } from "react"
@@ -32,6 +33,7 @@ export function ProductByCategory(){
 
     return(
         <>
+        <NavBar/>
         <h2 className="text-2xl uppercase mb-10">Products</h2>
         <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
           {data?.map((product) => {
