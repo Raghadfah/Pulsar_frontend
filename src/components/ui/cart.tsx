@@ -66,51 +66,50 @@ export function Cart() {
   }
   return (
     <>
-    <div className="cart">
-    <Popover>
-      <PopoverTrigger asChild>
-        <Link className="relative" to="#">
-          <ShoppingCartIcon className="h-6 w-6" />
-          <Badge className="absolute -top-2 -right-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white">
-            ({Object.keys(groups).length})
-          </Badge>
-        </Link>
-      </PopoverTrigger>
-      <PopoverContent className="w-300">
-        <div>
-          {state.cart.length === 0 && <p>No item</p>}
-          {Object.keys(groups).map((key) => {
-            const products = groups[key]
-            const product = products[0]
-            const totalForOne = products.reduce((acc, curr) => {
-              return acc + curr.price
-            }, 0)
+      <div className="cart">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Link className="relative" to="#">
+              <ShoppingCartIcon className="h-5 w-5" />
+              <Badge className="absolute -top-2 -right-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white">
+                ({Object.keys(groups).length})
+              </Badge>
+            </Link>
+          </PopoverTrigger>
+          <PopoverContent className="w-300">
+            <div>
+              {state.cart.length === 0 && <p>No item</p>}
+              {Object.keys(groups).map((key) => {
+                const products = groups[key]
+                const product = products[0]
+                const totalForOne = products.reduce((acc, curr) => {
+                  return acc + curr.price
+                }, 0)
 
-            return (
-              <div key={product.id}>
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-10 h-10 object-contain"
-                ></img>
-                <h4>{product.name}</h4>
-                <span>({products.length})</span>
-                <span>{totalForOne}</span>
-                <Button onClick={() => handleAddToCart(product)}>+</Button>
-                <Button onClick={() => handleDeleteFromCart(product.id)}>-</Button>
-              </div>
-            )
-          })}
-        </div>
-        <p>Total: {total}</p>
-        <Link to="/">Continue shopping</Link>
-        <Link to="/checkOut">
-        <Button onClick={handleCheckout}>Checkout</Button>
-        </Link>
-      </PopoverContent>
-    </Popover>
-    </div>
+                return (
+                  <div key={product.id}>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-10 h-10 object-contain"
+                    ></img>
+                    <h4>{product.name}</h4>
+                    <span>({products.length})</span>
+                    <span>{totalForOne}</span>
+                    <Button onClick={() => handleAddToCart(product)}>+</Button>
+                    <Button onClick={() => handleDeleteFromCart(product.id)}>-</Button>
+                  </div>
+                )
+              })}
+            </div>
+            <p>Total: {total}</p>
+            <Link to="/">Continue shopping</Link>
+            <Link to="/checkOut">
+              <Button onClick={handleCheckout}>Checkout</Button>
+            </Link>
+          </PopoverContent>
+        </Popover>
+      </div>
     </>
   )
 }
-
