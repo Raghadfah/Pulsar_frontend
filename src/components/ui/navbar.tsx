@@ -1,5 +1,12 @@
 import { Link, useSearchParams } from "react-router-dom"
-import { MenuIcon, SearchIcon, TelescopeIcon } from "lucide-react"
+import {
+  ChevronDownIcon,
+  HardHatIcon,
+  LogOutIcon,
+  MenuIcon,
+  SearchIcon,
+  TelescopeIcon
+} from "lucide-react"
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import CategoryService from "@/api/categories"
@@ -79,11 +86,51 @@ export function NavBar() {
 
   return (
     <header className="flex items-center justify-between px-4 py-3 shadow-sm dark:bg-[#f8d7da]">
+      {/* <DropdownMenu>
+      <DropdownMenuTrigger className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-300">
+        <span>Shop</span>
+        <ChevronDownIcon className="h-4 w-4" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-56 bg-white shadow-lg rounded-md dark:bg-gray-950">
+        <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+          <TelescopeIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          <span>Telescope</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+          <HardHatIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          <span>Space Helmet</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu> */}
+
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-300">
           <span>Shop</span>
+          <ChevronDownIcon className="h-4 w-4" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+
+        <DropdownMenuContent
+          align="start"
+          className="w-56  bg-white shadow-lg rounded-md dark:bg-gray-950"
+        >
+          <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+            {categories?.map((cat) => {
+              return (
+                <Link key={cat.id} to={`/products/section/${cat.id}`}>
+                  <DropdownMenuItem>{cat.name}</DropdownMenuItem>
+                </Link>
+              )
+            })}
+            <TelescopeIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <span style={{ color: "black" }}>Telescope</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+            <HardHatIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <span style={{ color: "black" }}>Space Helmet</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+
+        {/* <DropdownMenuContent align="end">
           <DropdownMenuSeparator />
           {categories?.map((cat) => {
             return (
@@ -92,7 +139,7 @@ export function NavBar() {
               </Link>
             )
           })}
-        </DropdownMenuContent>
+        </DropdownMenuContent> */}
       </DropdownMenu>
       <div className="relative flex items-center gap-4">
         <nav className="hidden md:flex items-center gap-6">
@@ -114,7 +161,7 @@ export function NavBar() {
                 size="icon"
                 variant="ghost"
               >
-               <TelescopeIcon  className="rounded-full" h-6 text-white />
+                <TelescopeIcon className="rounded-full" h-6 text-white />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -124,13 +171,17 @@ export function NavBar() {
               <Link to="/profile">
                 <DropdownMenuItem>Settings</DropdownMenuItem>
               </Link>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <Link to="/aboutUs">
+                <DropdownMenuItem>Support</DropdownMenuItem>
+              </Link>
               <DropdownMenuSeparator />
 
               <DropdownMenuItem>
-                <Link to="\" onClick={handleLogout}>
-                  Logout
-                </Link>
+                <LogOutIcon>
+                  <Link to="\" onClick={handleLogout}>
+                    Logout
+                  </Link>
+                </LogOutIcon>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -158,4 +209,3 @@ export function NavBar() {
     </header>
   )
 }
-

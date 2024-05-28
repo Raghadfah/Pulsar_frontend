@@ -4,14 +4,15 @@ import { DashboardProduct } from "@/components/ui/dashboardProduct"
 import { DashboardUsers } from "@/components/ui/dashboardUsers"
 import { NavBar } from "@/components/ui/navbar"
 
+
 export function Dashboard() {
   return (
     <>
-    <NavBar/>
-    <DashboardProduct/>
-      <DashboardUsers/>
-      <DashboardCategory/>
-      <DashboardOrders/>
+      <NavBar />
+      <DashboardProduct />
+      <DashboardUsers />
+      <DashboardCategory />
+      <DashboardOrders />
     </>
   )
 }

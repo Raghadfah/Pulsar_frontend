@@ -14,6 +14,7 @@ import { AboutUs } from "./pages/aboutUs"
 import { ProductByCategory } from "./pages/productByCategory"
 import CheckOut from "./pages/checkout"
 import ThankYou from "./pages/thankYou"
+import { DashboardProduct } from "./components/ui/dashboardProduct"
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />
+  },
+  {
+    path: "/dashboard/product",
+    element: <DashboardProduct />
   },
   {
     path: "/products/:id",

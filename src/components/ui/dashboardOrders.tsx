@@ -24,9 +24,7 @@ export function DashboardOrders() {
     quantity:"",
     productId:"",
   })
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string>("")
-
+ 
     const getOrders = async () => {
         try {
           // const token = localStorage.getItem("token")
@@ -56,15 +54,15 @@ export function DashboardOrders() {
     })
   }
  
-  // if (loading) return <p>Loading orders...</p>
-  if (error) return <p>{error}</p>
+
+
 
   return (
-    <div className="admin-orders">
+    <div className="admin-orders ">
       <h2>Orders</h2>
-      <table className="orders-table">
-        <thead>
-          <tr>
+      <table className="orders-table ">
+        <thead > 
+          <tr >
             <th>Order ID</th>
             <th>Customer Name</th>
             <th>Total</th>

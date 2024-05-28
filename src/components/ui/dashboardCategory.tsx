@@ -109,10 +109,10 @@ export function DashboardCategory (){
           value={category.description}
         />
         <div className="flex justify-evenly">
-          <Button className="mt-5 mx-1 w-2/3" type="submit">
+          <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="submit">
             Add
           </Button>
-          <Button className="mt-5 mx-1 w-2/3" type="reset">
+          <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="reset">
             Reset
           </Button>
         </div>

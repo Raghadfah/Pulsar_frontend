@@ -57,7 +57,7 @@ a {
   font-size: 4rem;
   /* margin: 0; */
   line-height: 1.2;
-  color: #4b0505;
+  color: #84052d;
   text-transform: uppercase;
   position: relative;
 }
@@ -79,7 +79,7 @@ a {
 }
 
 .hero-content .button {
-  background-color: #4b0505;
+  background-color: #84052d;
   color: #fff;
   padding: 0.75rem 1.5rem;
   margin-top: 100px;
@@ -90,7 +90,7 @@ a {
 }
 
 .hero-content .button:hover {
-  background-color: #6b1010;
+  background-color: #b00e41;
 }
 .hero-image {
   z-index: 1;
@@ -151,13 +151,13 @@ a {
   border-radius: 10px;
   width: 300px;
   text-align: center;
-  box-shadow: 0 4px 8px #4b0505;
+  box-shadow: 0 4px 8px #84052d;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 8px 16px #6b1010;
+  box-shadow: 0 8px 16px #b00e41;
 }
 
 .card img {
@@ -177,7 +177,7 @@ a {
 }
 
 .card button {
-  background-color: #4b0505;
+  background-color: #84052d;
   color: #ffffff;
   border: none;
   justify-content: center;
@@ -189,7 +189,7 @@ a {
 }
 
 .card button:hover {
-  background-color: #6b1010;
+  background-color: #b00e41;
 }
 .admin-orders {
   padding: 20px;
@@ -203,30 +203,23 @@ a {
 
 .orders-table th,
 .orders-table td {
-  border: 1px solid #4b0505;
+  border: 1px solid #84052d;
   padding: 8px;
 }
 
 .orders-table th {
-  background-color: #4b0505;
+  background-color: #84052d;
   text-align: left;
 }
 
 .orders-table tr:hover {
-  background-color: #4b0505;
+  background-color: #b00e41;
 }
-.custom-select {
-  width: 200px;
-  padding: 6px;
-  border: 1px solid #11010f;
-  border-radius: 4px;
-  background-color: #4b0505;
-  font-size: 16px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="5" viewBox="0 0 4 5"><path fill="none" stroke="%23000" stroke-width="1.1" d="M0 0l2 2.5L4 0"/></svg>'); /* Custom arrow */
-  background-repeat: no-repeat;
-  background-position: right 10px top 50%;
-  background-size: 8px 10px;
+.p {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+  position: absolute;
+  right: 0;
+  left: 15%;
+  text-align: left;
 }

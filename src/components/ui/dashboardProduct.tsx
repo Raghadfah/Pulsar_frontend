@@ -161,11 +161,12 @@ export function DashboardProduct() {
   }
   return (
     <>
+    <div className="product-dashboard-container">
       <form className="w-1/2 mx-auto" onSubmit={handleSubmit}>
         <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Add new product
         </h3>
-        <select className="custom-select" onChange={handleSelect}>
+        <select placeholder="Select a Category " className=" flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" onChange={handleSelect}>
           {categories?.map((cat) => {
             return (
               <option key={cat.id} value={cat.id}>
@@ -223,10 +224,10 @@ export function DashboardProduct() {
           value={product.price}
         />
         <div className="flex justify-evenly">
-          <Button className="mt-5 mx-1 w-2/3" type="submit">
+          <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="submit">
             Add
           </Button>
-          <Button className="mt-5 mx-1 w-2/3" type="reset">
+          <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="reset">
             Reset
           </Button>
         </div>
@@ -291,6 +292,7 @@ export function DashboardProduct() {
             ))}
           </TableBody>
         </Table>
+      </div>
       </div>
     </>
   )

@@ -70,8 +70,8 @@ export function Cart() {
         <Popover>
           <PopoverTrigger asChild>
             <Link className="relative" to="#">
-              <ShoppingCartIcon className="h-5 w-5" />
-              <Badge className="absolute -top-2 -right-2 rounded-full bg-red-500 px-2 py-1 text-xs text-white">
+              <ShoppingCartIcon className="h-8 w-8" />
+              <Badge className="absolute -top-2 -right-4 rounded-full bg-orange-700 px-1 py-1 text-xs text-white">
                 ({Object.keys(groups).length})
               </Badge>
             </Link>
