@@ -39,8 +39,6 @@ a {
   height: 100vh;
 }
 
-
-
 .hero-content h1 {
   font-size: 4rem;
   font-weight: bold;
@@ -135,7 +133,7 @@ a {
   max-width: 1880px;
   margin: 0 auto;
   text-align: center;
-  background-image: url("image/91643.jpg");
+  background-image: url("/public/image/91643.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
