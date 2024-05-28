@@ -57,7 +57,7 @@ export function Home() {
           </p>
         </div>
         <div className="hero-image">
-          <img className=" mx-auto" src="../src/image/planet.gif"></img>
+          <img className=" mx-auto" src="image/planet.gif"></img>
         </div>
       </section>
       <h2 className="text-2xl uppercase mb-10">Products</h2>
