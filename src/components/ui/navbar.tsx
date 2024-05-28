@@ -121,7 +121,7 @@ export function NavBar() {
                 </Link>
               )
             })}
-            <TelescopeIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <TelescopeIcon className="h-5 w-5 text-gray-500 dark:text-gray-400 dark:hover:bg-gray-800" />
             <span style={{ color: "black" }}>Telescope</span>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">

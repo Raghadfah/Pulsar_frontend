@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card"
 import { Footer } from "@/components/ui/footer"
 import "../Style/backgroundStyle.css"
+import { Separator } from "@radix-ui/react-dropdown-menu"
 
 export function Home() {
   const context = useContext(Context)
@@ -43,6 +44,7 @@ export function Home() {
     <>
       <NavBar />
       <Hero />
+      <Separator/>
       <script />
       <section className="hero">
         <div className="hero-content ">
@@ -96,16 +98,3 @@ export function Home() {
   )
 }
 
-/*
-Stuff I Need to do it: 
-1-forget password+sign in google (fri)
-2-Dark Mode (sat)
-3-A nice ui (sat)
-3-Category (fri)
-4-validation 
-5-list of order
-6-contact in the end of home (sat)
-7-profile page,about us page,checkout page (fri)
-8-pagination 
-9-massages for product
-*/
