@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card"
 import { Footer } from "@/components/ui/footer"
 import "../Style/backgroundStyle.css"
-import { Separator } from "@radix-ui/react-dropdown-menu"
+import { PageNumber } from "@/components/ui/pageNumber"
 
 export function Home() {
   const context = useContext(Context)
@@ -92,6 +92,7 @@ export function Home() {
         })}
       </section>
       {error && <p className="text-red-500">{error.message}</p>}
+      <PageNumber/>
       <Footer />
     </>
   )

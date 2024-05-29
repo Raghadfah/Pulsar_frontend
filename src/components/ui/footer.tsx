@@ -41,9 +41,6 @@ export function Footer() {
               <Link className="text-[#BDBDBD] hover:text-white transition-colors" to="/aboutUs">
                 About
               </Link>
-              <Link className="text-[#BDBDBD] hover:text-white transition-colors" to="/">
-                Services
-              </Link>
               <Link className="text-[#BDBDBD] hover:text-white transition-colors" to="/aboutUs">
                 Contact
               </Link>
