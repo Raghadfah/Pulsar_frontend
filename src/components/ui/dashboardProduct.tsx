@@ -16,18 +16,30 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
+
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from "@radix-ui/react-alert-dialog"
-import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog"
 import { EditProductDialog } from "@/components/ui/editProductDialog"
 
+type ProductWithCat = {
+  categoryName: string
+  id: string
+  name: string
+  categoryId: string
+  description: string
+  quantity: number
+  image: string
+  price: number
+}
 export function DashboardProduct() {
   const queryClient = useQueryClient()
   const [product, setProduct] = useState({
@@ -62,44 +74,39 @@ export function DashboardProduct() {
   }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
+    setLoading(true)
+    setError(null)
+    setSuccess(null)
     try {
-      await ProductService.createOne(product);
-      await postProduct();
-      setSuccess("Product added successfully!");
-      await handleReset();
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      await ProductService.createOne(product)
+      await postProduct()
+      setSuccess("Product added successfully!")
+      await handleReset()
+      queryClient.invalidateQueries({ queryKey: ["products"] })
     } catch (err) {
-      setError("Failed to add product.");
+      setError("Failed to add product.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
-
-
+  }
 
   const handleDeleteProduct = async (productId: string) => {
-    const hasConfirmed = confirm("Do you really want to delete?");
+    const hasConfirmed = confirm("Do you really want to delete?")
     if (hasConfirmed) {
-      setLoading(true);
-      setError(null);
-      setSuccess(null);
+      setLoading(true)
+      setError(null)
+      setSuccess(null)
       try {
-        await ProductService.deleteOne(productId);
-        setSuccess("Product deleted successfully!");
-        queryClient.invalidateQueries({ queryKey: ["products"] });
+        await ProductService.deleteOne(productId)
+        setSuccess("Product deleted successfully!")
+        queryClient.invalidateQueries({ queryKey: ["products"] })
       } catch (err) {
-        setError("Failed to delete product.");
+        setError("Failed to delete product.")
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
-  };
-
-
-
+  }
 
   const getProducts = async () => {
     try {
@@ -116,30 +123,29 @@ export function DashboardProduct() {
     }
   }
 
-
   const { data: products, error: productsError } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: ProductService.getAll
-  });
+  })
   const { data: categories, error: catError } = useQuery<Category[]>({
     queryKey: ["categories"],
     queryFn: CategoryService.getAll
-  });
+  })
   const { data: users, error: userError } = useQuery<User[]>({
     queryKey: ["users"],
     queryFn: getProducts
-  });
+  })
 
-  const productWithCat = products?.map((product) => {
+  const productWithCat: ProductWithCat[] | undefined = products?.map((product) => {
     const category = categories?.find((cat) => cat.id === product.categoryId)
 
     if (category) {
       return {
         ...product,
-        categoryId: category.name
+        categoryName: category.name
       }
     }
-    return product
+    return { ...product, categoryName: "" }
   })
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -161,138 +167,142 @@ export function DashboardProduct() {
   }
   return (
     <>
-    <div className="product-dashboard-container">
-      <form className="w-1/2 mx-auto" onSubmit={handleSubmit}>
-        <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-          Add new product
-        </h3>
-        <select placeholder="Select a Category " className=" flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" onChange={handleSelect}>
-          {categories?.map((cat) => {
-            return (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            )
-          })}
-        </select>
-        <Input
-          name="Id"
-          className="mt-4"
-          type="text"
-          placeholder="Id"
-          onChange={handleChange}
-          value={product.id}
-        />
-        <Input
-          name="categoryId"
-          className="mt-4"
-          type="text"
-          placeholder="CategoryId"
-          onChange={handleChange}
-          value={product.categoryId}
-        />
-        <Input
-          name="name"
-          className="mt-4"
-          type="text"
-          placeholder="Name"
-          onChange={handleChange}
-          value={product.name}
-        />
-        <Input
-          name="image"
-          className="mt-4"
-          type="text"
-          placeholder="Image"
-          onChange={handleChange}
-          value={product.image}
-        />
-        <Input
-          name="quantity"
-          className="mt-4"
-          type="text"
-          placeholder="Quantity"
-          onChange={handleChange}
-          value={product.quantity}
-        />
-        <Input
-          name="price"
-          className="mt-4"
-          type="text"
-          placeholder="Price"
-          onChange={handleChange}
-          value={product.price}
-        />
-        <div className="flex justify-evenly">
-          <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="submit">
-            Add
-          </Button>
-          <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="reset">
-            Reset
-          </Button>
-        </div>
-      </form>
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      <div className="product-dashboard-container">
+        <form className="w-1/2 mx-auto" onSubmit={handleSubmit}>
+          <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+            Add new product
+          </h3>
+          <select
+            placeholder="Select a Category "
+            className=" flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            onChange={handleSelect}
+          >
+            {categories?.map((cat) => {
+              return (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              )
+            })}
+          </select>
+          <Input
+            name="Id"
+            className="mt-4"
+            type="text"
+            placeholder="Id"
+            onChange={handleChange}
+            value={product.id}
+          />
+          <Input
+            name="categoryId"
+            className="mt-4"
+            type="text"
+            placeholder="CategoryId"
+            onChange={handleChange}
+            value={product.categoryId}
+          />
+          <Input
+            name="name"
+            className="mt-4"
+            type="text"
+            placeholder="Name"
+            onChange={handleChange}
+            value={product.name}
+          />
+          <Input
+            name="image"
+            className="mt-4"
+            type="text"
+            placeholder="Image"
+            onChange={handleChange}
+            value={product.image}
+          />
+          <Input
+            name="quantity"
+            className="mt-4"
+            type="text"
+            placeholder="Quantity"
+            onChange={handleChange}
+            value={product.quantity}
+          />
+          <Input
+            name="price"
+            className="mt-4"
+            type="text"
+            placeholder="Price"
+            onChange={handleChange}
+            value={product.price}
+          />
+          <div className="flex justify-evenly">
+            <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="submit">
+              Add
+            </Button>
+            <Button className="mt-5 mx-1 w-2/3 bg-pink-900" type="reset">
+              Reset
+            </Button>
+          </div>
+        </form>
+        {loading && <p>Loading...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {success && <p style={{ color: "green" }}>{success}</p>}
 
-      <div>
-        <h1>Product</h1>
-        <Table>
-          <TableCaption>A list of your recent products</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]"></TableHead>
-              <TableHead className="text-center">Name</TableHead>
-              <TableHead className="text-center">CategoryId</TableHead>
-              <TableHead className="text-center">Image</TableHead>
-              <TableHead className="text-center">Price</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {productWithCat?.map((product) => (
-              <TableRow key={product.id}>
-                <TableCell className="font-medium"></TableCell>
-                <TableCell className="text-center">{product.name}</TableCell>
-                <TableCell className="text-center">{product.categoryId}</TableCell>
-                <TableCell className="text-center">{product.image}</TableCell>
-                <TableCell className="text-center">{product.price}</TableCell>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <div className="flex gap-4  p-4">
-                      <Button variant="destructive" className="mt-auto h-auto">
-                        X
-                      </Button>
-                    </div>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you sure you want to delete? {product.name}?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. Deleting your product will permanently remove
-                        all associated data from our servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={() => handleDeleteProduct(product.id)}>
-                        Continue
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-                <TableCell />
-                <TableCell className="text-left">
-                  <EditProductDialog product={product} />
-                </TableCell>
+        <div>
+          <h1>Product</h1>
+          <Table>
+            <TableCaption>A list of your recent products</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]"></TableHead>
+                <TableHead className="text-center">Name</TableHead>
+                <TableHead className="text-center">CategoryId</TableHead>
+                <TableHead className="text-center">Image</TableHead>
+                <TableHead className="text-center">Price</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+            </TableHeader>
+            <TableBody>
+              {productWithCat?.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell className="font-medium"></TableCell>
+                  <TableCell className="text-center">{product.name}</TableCell>
+                  <TableCell className="text-center">{product.categoryName}</TableCell>
+                  <TableCell className="text-center">{product.image}</TableCell>
+                  <TableCell className="text-center">{product.price}</TableCell>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <div className="flex gap-4  p-4">
+                        <Button variant="destructive" className="mt-auto h-auto">
+                          X
+                        </Button>
+                      </div>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to delete? {product.name}?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. Deleting your product will permanently
+                          remove all associated data from our servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => handleDeleteProduct(product.id)}>
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  <TableCell />
+                  <TableCell className="text-left">
+                    <EditProductDialog product={product} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </>
   )

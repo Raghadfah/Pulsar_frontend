@@ -21,10 +21,11 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from "@radix-ui/react-alert-dialog"
-import { AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog"
 import { EditCategoryDialog } from "./editCategoryDialog"
 
 export function DashboardCategory (){

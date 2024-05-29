@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react"
+import {  useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import api from "@/api"
@@ -12,17 +12,8 @@ import {
   TableRow
 } from "@/components/ui/table"
 import { User } from "@/types"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogTitle,
-  AlertDialogTrigger
-} from "@radix-ui/react-alert-dialog"
 import { Button } from "@/components/ui/button"
-import { AlertDialogFooter, AlertDialogHeader } from "./alert-dialog"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,  AlertDialogFooter, AlertDialogHeader,  AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import UserService from "@/api/users"
 import { EditUserDialog } from "./editUserDialog"
 
