@@ -93,7 +93,6 @@ export default function CheckOut() {
   const [selectedAddress, setSelectedAddress] = useState(defaultAddress)
 
   const handleRadioChange = (value: string) => {
-    console.log("value", value)
 
     setSelectedAddress(value)
   }
@@ -107,7 +106,6 @@ export default function CheckOut() {
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setAddress({ ...address, [name]: value })
-    console.log(name, value)
   }
   const postAddress = async () => {
     try {

@@ -38,7 +38,6 @@ export function Signup() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const response = await handleSignup()
-    console.log("response:", response)
     if (response) {
       navigate("/login")
     }

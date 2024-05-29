@@ -53,7 +53,6 @@ export function Profile() {
   })
   const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log(name, value)
 
     setUpdatedUser({ ...updatedUser, [name]: value })
   }
@@ -95,7 +94,6 @@ export function Profile() {
   }
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log(name, value)
     setAddress({ ...address, [name]: value })
   }
   const handleReset = async () => {
@@ -317,7 +315,6 @@ export function Profile() {
         <h1 className="text-2xl text-start font-bold">Your Addresses</h1>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {addresses?.map((address) => {
-            console.log(address)
 
             return (
               <Card key={address.id}>

@@ -23,7 +23,6 @@ export function Cart() {
   if (!context) throw Error("Context is missing")
   const { state, handleDeleteFromCart, handleAddToCart, handleRemoveCart } = context
 
-  console.log(state.cart)
   const groups = state.cart.reduce((acc, obj) => {
     const key = obj.id
     const curGroup = acc[key] ?? []
@@ -46,7 +45,7 @@ export function Cart() {
       productId: key
     })
   })
-  console.log("checkoutOrder:", checkoutOrder)
+  
   const handleCheckout = async () => {
     try {
       const token = localStorage.getItem("token")

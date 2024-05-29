@@ -23,7 +23,6 @@ export function ProductDetails() {
 
   const { id } = useParams<string>()
   const [selectedQuantity, setSelectedQuantity] = useState(1)
-  console.log("id in product details ", id)
 
   const getProductById = async (id: string | undefined) => {
     try {
@@ -38,7 +37,6 @@ export function ProductDetails() {
     queryKey: ["products", id],
     queryFn: () => getProductById(id)
   })
-  console.log("data in product details", data)
 
   if (isPending) {
     return <p>Data is fetching....</p>
@@ -67,7 +65,7 @@ export function ProductDetails() {
     <>
       <NavBar />
       <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
-        <div className="grid gap-4 md:gap-10 items-start">
+        <div className="grid gap-4 md:gap-10 items-start mt-8">
           <div className="grid gap-4">
             <h1 className="font-bold text-3xl lg:text-4xl">{data.name}</h1>
             <div className="flex justify-center gap-4">
