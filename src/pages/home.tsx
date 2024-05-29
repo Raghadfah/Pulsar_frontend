@@ -73,7 +73,7 @@ export function Home() {
                 <CardHeader>
                   <img alt={product.name} src={product.image} />
                   <CardTitle>{product.name}</CardTitle>
-                  <CardDescription>{product.description.slice(0,100)}...da</CardDescription>
+                  <CardDescription>{product.description.slice(0,100)}...</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p>{product.price} $</p>

@@ -59,7 +59,7 @@ export function DashboardOrders() {
 
   return (
     <div className="admin-orders ">
-      <h2>Orders</h2>
+      <h2 className="font-bold text-[#ffe6b4] text-2xl mb-2">Orders</h2>
       <table className="orders-table ">
         <thead > 
           <tr >

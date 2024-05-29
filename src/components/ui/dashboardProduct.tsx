@@ -168,8 +168,9 @@ export function DashboardProduct() {
   return (
     <>
       <div className="product-dashboard-container">
+        <h2 className="font-bold text-[#ffe6b4] text-3xl">Product</h2>
         <form className="w-1/2 mx-auto" onSubmit={handleSubmit}>
-          <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+          <h3 className="scroll-m-20 border-b pb-2 text-1xl font-semibold tracking-tight first:mt-0 text-white">
             Add new product
           </h3>
           <select
@@ -247,7 +248,6 @@ export function DashboardProduct() {
         {success && <p style={{ color: "green" }}>{success}</p>}
 
         <div>
-          <h1>Product</h1>
           <Table>
             <TableCaption>A list of your recent products</TableCaption>
             <TableHeader>

@@ -90,7 +90,8 @@ export function DashboardCategory (){
     return (
       <>
 <form className="w-1/2 mx-auto" onSubmit={handleSubmit}>
-        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="font-bold text-[#ffe6b4] text-3xl mb-2">Categories</h2>
+        <h2 className="scroll-m-20 border-b pb-2 text-1xl font-semibold tracking-tight first:mt-0 text-white">
           Add new category
         </h2>
         <Input

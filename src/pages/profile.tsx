@@ -312,7 +312,7 @@ export function Profile() {
           </Card>
         </div>
         <Separator />
-        <h1 className="text-2xl text-start font-bold">Your Addresses</h1>
+        <h1 className="text-2xl text-start font-bold">Saved Addresses</h1>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {addresses?.map((address) => {
 

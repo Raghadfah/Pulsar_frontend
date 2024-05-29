@@ -54,6 +54,7 @@ export function DashboardUsers() {
   })
   return (
     <>
+        <h2 className="font-bold text-[#ffe6b4] text-2xl mb-2">Users</h2>
       <Table>
         <TableCaption>A list of your recent user</TableCaption>
         <TableHeader>
