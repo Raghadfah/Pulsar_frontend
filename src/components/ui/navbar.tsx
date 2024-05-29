@@ -113,16 +113,20 @@ export function NavBar() {
           align="start"
           className="w-56  bg-white shadow-lg rounded-md dark:bg-gray-950"
         >
+          {categories?.map((cat) => {
+            return (
+              <Link key={cat.id} to={`/products/section/${cat.id}`}>
+                <DropdownMenuItem>{cat.name}</DropdownMenuItem>
+              </Link>
+            )
+          })}
           <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
-            {categories?.map((cat) => {
-              return (
-                <Link key={cat.id} to={`/products/section/${cat.id}`}>
-                  <DropdownMenuItem>{cat.name}</DropdownMenuItem>
-                </Link>
-              )
-            })}
             <TelescopeIcon className="h-5 w-5 text-gray-500 dark:text-gray-400 dark:hover:bg-gray-800" />
-            <span style={{ color: "black" }}>Telescope</span>
+            <span style={{ color: "black" }}> Solar Telescope</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+            <TelescopeIcon className="h-5 w-5 text-gray-500 dark:text-gray-400 dark:hover:bg-gray-800" />
+            <span style={{ color: "black" }}> Refractor Telescope</span>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
             <HardHatIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />

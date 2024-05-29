@@ -108,6 +108,7 @@ export function AboutUs() {
           </div>
         </div>
       </section>
+      <footer/>
     </main>
   )
 }
