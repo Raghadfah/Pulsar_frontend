@@ -44,7 +44,6 @@ export function Home() {
     <>
       <NavBar />
       <Hero />
-      <Separator/>
       <script />
       <section className="hero">
         <div className="hero-content ">
@@ -62,7 +61,7 @@ export function Home() {
           <img className=" mx-auto" src="image/planet.gif"></img>
         </div>
       </section>
-      <h2 className="text-2xl uppercase mb-10">Products</h2>
+      <h2 className="text-2xl uppercase mb-10 font-bold text-[#ffe6b4]">Products</h2>
       <section className="flex flex-col md:flex-row justify-center flex-wrap mx-auto mt-12 gap-4 mx-50">
         {data?.map((product) => {
           const products = state.cart.filter((p) => p.id === product.id)
@@ -70,7 +69,7 @@ export function Home() {
 
           return (
             <div key={product.id} className="card">
-              <Card key={product.id}>
+              <Card key={product.id} className="h-full flex flex-col items-center justify-between">
                 <CardHeader>
                   <img alt={product.name} src={product.image} />
                   <CardTitle>{product.name}</CardTitle>
@@ -97,4 +96,3 @@ export function Home() {
     </>
   )
 }
-

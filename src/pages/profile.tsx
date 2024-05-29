@@ -1,6 +1,6 @@
 import { ChangeEvent, useContext, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
+import { AvatarFallback, Avatar } from "@/components/ui/avatar"
 
 import {
   CardTitle,

@@ -33,16 +33,17 @@ a {
 }
 .hero {
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   padding: 5rem 2rem;
   height: 100vh;
+}
+.hero-content {
+  width: 95%;
 }
 
 .hero-content h1 {
   font-size: 4rem;
   font-weight: bold;
-  /* margin: 0; */
   line-height: 1.2;
   color: #7c7d81;
   font-size: 6vw;
@@ -50,12 +51,10 @@ a {
   text-transform: uppercase;
   font-weight: bold;
   color: #ffe6b4;
-  /* margin: 0; */
 }
 
 .hero-content .highlight {
   font-size: 4rem;
-  /* margin: 0; */
   line-height: 1.2;
   color: #84052d;
   text-transform: uppercase;
@@ -66,7 +65,6 @@ a {
   margin: 1.5rem 0;
   font-size: 4rem;
   font-weight: bold;
-  /* margin: 0; */
   line-height: 1.2;
   color: #7c7d81;
   font-size: 6vw;
@@ -75,7 +73,6 @@ a {
   font-weight: bold;
   color: #ffe6b4;
   margin-top: 200px;
-  /* margin: 0; */
 }
 
 .hero-content .button {
@@ -97,38 +94,6 @@ a {
   position: absolute;
   padding-top: 5%;
 }
-
-/* Animations */
-/* @keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-/* .name-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: white;
-  font-family: "Arial", sans-serif;
-} */
-
-/* .name-title {
-  font-size: 6rem;
-  font-weight: bold;
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(to right, #a81365, #f09819);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: center;
-  font-family: 'georgia';
-  animation: glow 1.5s ease-in-out infinite alternate;
-} */
-
 #root {
   max-width: 1880px;
   margin: 0 auto;
@@ -161,8 +126,8 @@ a {
 }
 
 .card img {
-  width: 100%;
-  height: auto;
+  height: 200px;
+  object-fit: contain;
   border-radius: 10px;
 }
 

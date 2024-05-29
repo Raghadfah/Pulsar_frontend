@@ -1,3 +1,4 @@
+import { Footer } from "@/components/ui/footer"
 import { NavBar } from "@/components/ui/navbar"
 
 export function AboutUs() {
@@ -42,7 +43,7 @@ export function AboutUs() {
               height="100"
               src="image/phases.png"
               style={{
-                aspectRatio: "200/200",
+                aspectRatio: "200/200"
               }}
               width="100"
             />
@@ -72,7 +73,7 @@ export function AboutUs() {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Meet the Pulsar Team
             </h2>
-            <p className="mx-auto font-bold max-w-[700px] text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            <p className="mx-auto font-bold max-w-[700px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-black">
               Our team of talented and dedicated professionals is the driving force behind our
               success. Get to know the key members of our company.
             </p>
@@ -92,10 +93,10 @@ export function AboutUs() {
               />
               <div className="text-center">
                 <h3 className="text-lg font-bold">Raghad Alghunaim </h3>
-                <p className="text-gray-900 font-bold dark:text-gray-400">CEO</p>
+                <p className="text-black-900 font-bold text-black">CEO</p>
               </div>
               <div className="p">
-                <p className="mx-auto max-w-[500px] text-gray-900 dark:text-gray-400">
+                <p className="mx-auto max-w-[500px] text-white-200 font-bold text-white">
                   Hello everyone, my name is Raghad Alghunaim, and I am excited to welcome you to
                   Pulsar, your destination for space exploration. Inspired by my journey at Saudi
                   Digital Academy mastering full-stack development using C#, Pulsar merges
@@ -108,7 +109,7 @@ export function AboutUs() {
           </div>
         </div>
       </section>
-      <footer/>
+        <Footer />
     </main>
   )
 }
