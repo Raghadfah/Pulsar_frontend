@@ -58,7 +58,7 @@ export function Home() {
           </p>
         </div>
         <div className="hero-image">
-          <img className=" mx-auto" src="image/planet.gif"></img>
+          <img className=" mx-auto" src="images/planet.gif"></img>
         </div>
       </section>
       <h2 className="text-2xl uppercase mb-10 font-bold text-[#ffe6b4]">Products</h2>
@@ -73,7 +73,7 @@ export function Home() {
                 <CardHeader>
                   <img alt={product.name} src={product.image} />
                   <CardTitle>{product.name}</CardTitle>
-                  <CardDescription>{product.description.slice(0,100)}...</CardDescription>
+                  <CardDescription>{product.description.slice(0, 100)}...</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p>{product.price} $</p>
@@ -92,7 +92,7 @@ export function Home() {
         })}
       </section>
       {error && <p className="text-red-500">{error.message}</p>}
-      <PageNumber/>
+      <PageNumber />
       <Footer />
     </>
   )

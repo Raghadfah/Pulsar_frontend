@@ -24,7 +24,7 @@ export function AboutUs() {
               alt="Acme Software Solutions"
               className="w-full max-w-[300px]"
               height="200"
-              src="image/planet.gif"
+              src="images/planet.gif"
               style={{
                 aspectRatio: "200/200",
                 objectFit: "cover"
@@ -41,7 +41,7 @@ export function AboutUs() {
               alt="Mission and Values"
               className="w-full max-w-[400px]"
               height="100"
-              src="image/phases.png"
+              src="images/phases.png"
               style={{
                 aspectRatio: "200/200"
               }}
@@ -84,7 +84,7 @@ export function AboutUs() {
                 alt="Sofia Davis"
                 className="h-30 w-30 rounded-full object-cover"
                 height="120"
-                src="image/team.jpg"
+                src="images/team.jpg"
                 style={{
                   aspectRatio: "120/120",
                   objectFit: "cover"
@@ -109,7 +109,7 @@ export function AboutUs() {
           </div>
         </div>
       </section>
-        <Footer />
+      <Footer />
     </main>
   )
 }
