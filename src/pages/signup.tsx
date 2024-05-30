@@ -46,7 +46,8 @@ export function Signup() {
   return (
     <div>
       <NavBar />
-      <h3>SIGNUP</h3>
+      <h3>Sign Up</h3>
+      <p className="text-gray-500 dark:text-gray-400">Create your account to get started.</p>
       <form action="POST" onSubmit={handleSubmit} className="w-full md:w-1/3 mx-auto">
         <Input
           name="fullName"
@@ -79,7 +80,7 @@ export function Signup() {
         <div className="flex justify-between flex-col">
           <Button className="mt-4">Signup</Button>
           <Button variant="link" className="mt-4">
-            <Link to="/login">Have an account already?</Link>
+            <Link   className="text-pink-500"  to="/login">Have an account already?</Link>
           </Button>
         </div>
       </form>

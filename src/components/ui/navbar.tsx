@@ -155,14 +155,11 @@ export function NavBar() {
                 <DropdownMenuItem>Support</DropdownMenuItem>
               </Link>
               <DropdownMenuSeparator />
-
-              <DropdownMenuItem>
-                <LogOutIcon>
-                  <Link to="\" onClick={handleLogout}>
-                    Logout
-                  </Link>
-                </LogOutIcon>
-              </DropdownMenuItem>
+              <Link to="\" onClick={handleLogout}>
+                <DropdownMenuItem>
+                  <LogOutIcon>Logout</LogOutIcon>
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
         )}
