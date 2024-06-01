@@ -112,7 +112,7 @@ export function NavBar() {
           {categoriesWithIcons?.map(({ id, name, Icon }) => {
             return (
               <Link key={id} to={`/products/section/${id}`}>
-                <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 ">
                   <Icon />
                   <span style={{ color: "black" }}>{name}</span>
                 </DropdownMenuItem>
@@ -130,7 +130,7 @@ export function NavBar() {
             About Us
           </Link>
           {state.user?.role === ROLE.Admin && <Link to="/dashboard">Dashboard</Link>}
-          {!state.user && <Link to="/signup"> SignUp </Link>}
+          {!state.user && <Link to="/signup"> Sign Up </Link>}
           {!state.user && <Link to="/login">Login</Link>}
         </nav>
         {state.user && (
@@ -151,7 +151,7 @@ export function NavBar() {
               <Link to="/profile">
                 <DropdownMenuItem>Settings</DropdownMenuItem>
               </Link>
-              <Link to="/aboutUs">
+              <Link to="/support">
                 <DropdownMenuItem>Support</DropdownMenuItem>
               </Link>
               <DropdownMenuSeparator />

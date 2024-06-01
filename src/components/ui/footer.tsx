@@ -28,7 +28,7 @@ export function Footer() {
               </Link>
               <Link className="flex items-center gap-2 text-[#BDBDBD] hover:text-white transition-colors" to="#">
                 <MapPinIcon className="w-5 h-5" />
-                <span>123 Rocket Rd, Spaceport USA</span>
+                <span>123 Rocket Rd, Riyadh KSA</span>
               </Link>
             </div>
           </div>
@@ -41,7 +41,7 @@ export function Footer() {
               <Link className="text-[#BDBDBD] hover:text-white transition-colors" to="/aboutUs">
                 About
               </Link>
-              <Link className="text-[#BDBDBD] hover:text-white transition-colors" to="/aboutUs">
+              <Link className="text-[#BDBDBD] hover:text-white transition-colors" to="/support">
                 Contact
               </Link>
             </div>
@@ -76,7 +76,7 @@ export function Footer() {
               <span className="sr-only">Youtube</span>
             </Link>
           </div>
-          <p className="text-[#BDBDBD] text-xs mt-4 sm:mt-0">© 2024 Acme Space Inc. All rights reserved.</p>
+          <p className="text-[#BDBDBD] text-xs mt-4 sm:mt-0">© 2024 Pulsar Space Inc. All rights reserved.</p>
         </div>
       </footer>
     </>

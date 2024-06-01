@@ -1,10 +1,11 @@
 import { useContext } from "react"
-import { ShoppingCartIcon } from "lucide-react"
+import { MinusIcon, PlusIcon, ShoppingCartIcon, XIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Link } from "react-router-dom"
 
 import { Context } from "@/App"
 import { Badge } from "./badge"
+import { Separator } from "@/components/ui/separator"
 import { Button } from "./button"
 import { Product } from "@/types"
 import api from "@/api"
@@ -45,7 +46,7 @@ export function Cart() {
       productId: key
     })
   })
-  
+
   const handleCheckout = async () => {
     try {
       const token = localStorage.getItem("token")
@@ -76,6 +77,12 @@ export function Cart() {
             </Link>
           </PopoverTrigger>
           <PopoverContent className="w-300">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold">Cart</h2>
+              <Button variant="ghost" size="icon">
+                <XIcon className="w-5 h-5" />
+              </Button>
+            </div>
             <div>
               {state.cart.length === 0 && <p>No item</p>}
               {Object.keys(groups).map((key) => {
@@ -86,26 +93,70 @@ export function Cart() {
                 }, 0)
 
                 return (
-                  <div key={product.id}>
+                  <div
+                    className="grid grid-cols-[64px_1fr_auto] items-center gap-4"
+                    key={product.id}
+                  >
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-10 h-10 object-contain"
+                      width={64}
+                      height={64}
+                      className="rounded-md"
                     ></img>
-                    <h4>{product.name}</h4>
-                    <span>({products.length})</span>
-                    <span>{totalForOne}</span>
-                    <Button onClick={() => handleAddToCart(product)}>+</Button>
-                    <Button onClick={() => handleDeleteFromCart(product.id)}>-</Button>
+                    <div className="space-y-1">
+                      <h4 className="font-medium">{product.name}</h4>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDeleteFromCart(product.id)}
+                        >
+                          {" "}
+                          <MinusIcon className="w-4 h-4" />
+                        </Button>
+                        <span className="text-sm">{products.length}</span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleAddToCart(product)}
+                        >
+                          {" "}
+                          <PlusIcon className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-medium" >{totalForOne} $</span>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleDeleteFromCart(product.id)}
+                      >
+                        <XIcon className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 )
               })}
             </div>
-            <p>Total: {total}</p>
-            <Link to="/">Continue shopping</Link>
-            <Link to="/checkOut">
-              <Button onClick={handleCheckout}>Checkout</Button>
-            </Link>
+            <Separator className="my-6" />
+            <div className="flex items-center justify-between">
+              <span className="font-medium">Total</span>
+              <span className="font-medium">{total.toFixed(2)} $</span>
+            </div>
+            <div className="flex gap-4 mt-6">
+              <Link to="/">
+                <Button variant="outline" className="flex-1">
+                  Continue Shopping
+                </Button>
+              </Link>
+              <Link to="/checkOut">
+                <Button className="flex-1" onClick={handleCheckout}>
+                  Checkout
+                </Button>
+              </Link>
+            </div>
           </PopoverContent>
         </Popover>
       </div>

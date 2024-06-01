@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { useQuery } from "@tanstack/react-query"
 
 import { Product } from "@/types"
@@ -62,7 +62,7 @@ export function Home() {
         </div>
       </section>
       <h2 className="text-2xl uppercase mb-10 font-bold text-[#ffe6b4]">Products</h2>
-      <section className="flex flex-col md:flex-row justify-center flex-wrap mx-auto mt-12 gap-4 mx-50">
+      <section className="flex flex-wrap flex-col md:flex-row justify-center max-w-6x1 mx-auto mt-20 gap-4">
         {data?.map((product) => {
           const products = state.cart.filter((p) => p.id === product.id)
           const inStock = product.quantity > products.length

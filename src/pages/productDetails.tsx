@@ -39,7 +39,7 @@ export function ProductDetails() {
   })
 
   if (isPending) {
-    return <p>Data is fetching....</p>
+    return <p>Data is loading....</p>
   }
   if (isError) {
     return <span>Error: {error.message}</span>
