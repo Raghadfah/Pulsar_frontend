@@ -91,11 +91,11 @@ a {
 .hero-content .button:hover {
   background-color: #b00e41;
 }
-.hero-image {
+/* .hero-image {
   z-index: 1;
   position: absolute;
   padding-top: 5%;
-}
+} */
 #root {
   max-width: 1880px;
   margin: 0 auto;

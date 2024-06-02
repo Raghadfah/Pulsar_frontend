@@ -36,7 +36,7 @@ export function ProductByCategory(){
         <>
         <NavBar/>
         <h2 className="text-2xl uppercase mb-10">Products</h2>
-        <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
+        <section className="flex flex-col flex-wrap md:flex-row gap-4 justify-between max-w-6xl mx-auto">
           {data?.map((product) => {
             
             const products = state.cart.filter((p) => p.id === product.id)
@@ -44,7 +44,7 @@ export function ProductByCategory(){
   
             return (
               <div key={product.id} className="card">
-              <Card key={product.id} >
+              <Card key={product.id} className="h-full flex flex-col items-center justify-between" >
                 <CardHeader>
                   <img alt={product.name} src={product.image} />
                   <CardTitle>{product.name}</CardTitle>

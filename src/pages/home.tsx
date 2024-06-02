@@ -57,12 +57,12 @@ export function Home() {
             <br /> with Pulsar
           </p>
         </div>
-        <div className="hero-image">
-          <img className=" mx-auto" src="images/planet.gif"></img>
+        <div className="hero-image z-10 absolute pt-[5%]">
+          <img className=" mx-auto pt-[40%] md:w-auto w-1/2 md:pt-[3%]" src="images/planet.gif"></img>
         </div>
       </section>
       <h2 className="text-2xl uppercase mb-10 font-bold text-[#ffe6b4]">Products</h2>
-      <section className="flex flex-wrap flex-col md:flex-row justify-center max-w-6x1 mx-auto mt-20 gap-4">
+      <section className="flex flex-wrap flex-col md:flex-row justify-center max-w-6x1 mx-auto mt-20 gap-4 ">
         {data?.map((product) => {
           const products = state.cart.filter((p) => p.id === product.id)
           const inStock = product.quantity > products.length
