@@ -131,7 +131,7 @@ export default function CheckOut() {
     <>
       <NavBar />
       <div className="checkout-container">
-        <h1>Checkout</h1>
+        <h1 className="mt-8 font-bold text-[#ffe6b4] text-2xl  mb-10">Checkout</h1>
 
         {error && <p className="error">{error}</p>}
       </div>
@@ -163,7 +163,7 @@ export default function CheckOut() {
                       <Button size="icon" variant="outline">
                         <MinusIcon />
                       </Button>
-                      <span>{products.length}</span>
+                      <span className="text-sm">{products.length}</span>
                       <Button size="icon" variant="outline">
                         <PlusIcon />
                       </Button>
