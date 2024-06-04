@@ -4,12 +4,6 @@
   font-size: 1vw;
   line-height: 130%;
 }
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
 
 ul {
   list-style-type: none;
@@ -60,7 +54,7 @@ a {
   position: relative;
 }
 
-.text-center {
+.text-center-planet {
   padding-top: 8%;
   font-size: 24px;
   font-weight: bold;
