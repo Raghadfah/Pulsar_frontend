@@ -24,6 +24,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "./dropdown-menu"
+import { Sheet, SheetContent, SheetTrigger } from "./sheet"
 
 export function NavBar() {
   const context = useContext(Context)
@@ -98,91 +99,141 @@ export function NavBar() {
     }
   })
   return (
-    <header className="flex items-center justify-between px-4 py-3 shadow-sm dark:bg-[#f8d7da]">
-      <DropdownMenu>
-        <DropdownMenuTrigger className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-300">
-          <span>Shop</span>
-          <ChevronDownIcon className="h-4 w-4" />
-        </DropdownMenuTrigger>
+    <>
+      <header className="flex items-center justify-between px-4 py-3 shadow-sm dark:bg-[#f8d7da]">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-300">
+            <span>Shop</span>
+            <ChevronDownIcon className="h-4 w-4" />
+          </DropdownMenuTrigger>
 
-        <DropdownMenuContent
-          align="start"
-          className="w-56  bg-white shadow-lg rounded-md dark:bg-gray-950"
-        >
-          {categoriesWithIcons?.map(({ id, name, Icon }) => {
-            return (
-              <Link key={id} to={`/products/section/${id}`}>
-                <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 ">
-                  <Icon />
-                  <span style={{ color: "black" }}>{name}</span>
-                </DropdownMenuItem>
+          <DropdownMenuContent
+            align="start"
+            className="w-56  bg-white shadow-lg rounded-md dark:bg-gray-950"
+          >
+            {categoriesWithIcons?.map(({ id, name, Icon }) => {
+              return (
+                <Link key={id} to={`/products/section/${id}`}>
+                  <DropdownMenuItem className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 ">
+                    <Icon />
+                    <span style={{ color: "black" }}>{name}</span>
+                  </DropdownMenuItem>
+                </Link>
+              )
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <div className="relative flex items-center gap-4">
+          <nav className="hidden md:flex items-center gap-6">
+            <Link className="text-sm font-medium hover:underline" to="/">
+              Home
+            </Link>
+            <Link className="text-sm font-medium hover:underline" to="/aboutUs">
+              About Us
+            </Link>
+            {state.user?.role === ROLE.Admin && <Link to="/dashboard">Dashboard</Link>}
+            {!state.user && <Link to="/signup"> Sign Up </Link>}
+            {!state.user && <Link to="/login">Login</Link>}
+          </nav>
+          {state.user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
+                  size="icon"
+                  variant="ghost"
+                >
+                  <TelescopeIcon className="rounded-full" h-6 text-white />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <Link to="/profile">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </Link>
+                <Link to="/support">
+                  <DropdownMenuItem>Support</DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+                <Link to="\" onClick={handleLogout}>
+                  <DropdownMenuItem>
+                    <LogOutIcon>Logout</LogOutIcon>
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </div>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button className="md:hidden" size="icon" variant="outline">
+              <MenuIcon className="h-6 w-6" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <div className="grid gap-6 p-4">
+              <Link className="flex items-center text-[#84052d] gap-2 text-lg font-semibold" to="/">Home
               </Link>
-            )
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <div className="relative flex items-center gap-4">
-        <nav className="hidden md:flex items-center gap-6">
-          <Link className="text-sm font-medium hover:underline" to="/">
-            Home
-          </Link>
-          <Link className="text-sm font-medium hover:underline" to="/aboutUs">
-            About Us
-          </Link>
-          {state.user?.role === ROLE.Admin && <Link to="/dashboard">Dashboard</Link>}
-          {!state.user && <Link to="/signup"> Sign Up </Link>}
-          {!state.user && <Link to="/login">Login</Link>}
-        </nav>
-        {state.user && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
-                size="icon"
-                variant="ghost"
-              >
-                <TelescopeIcon className="rounded-full" h-6 text-white />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <Link to="/profile">
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-              </Link>
-              <Link to="/support">
-                <DropdownMenuItem>Support</DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <Link to="\" onClick={handleLogout}>
-                <DropdownMenuItem>
-                  <LogOutIcon>Logout</LogOutIcon>
-                </DropdownMenuItem>
-              </Link>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
+              <nav className="grid gap-4">
+                {state.user?.role === ROLE.Admin && (
+                  <Link
+                    className="flex items-center gap-2 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 transition-colors"
+                    to="/dashboard"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                {!state.user && (
+                  <Link
+                    className="flex items-center gap-2 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 transition-colors"
+                    to="/signup"
+                  >
+                    Signup
+                  </Link>
+                )}
+                {!state.user && (
+                  <Link
+                    className="flex items-center gap-2 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 transition-colors"
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                )}
+                {state.user && (
+                  <Link
+                    className="flex items-center gap-2 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 transition-colors"
+                    onClick={handleLogout}
+                    to="/"
+                  >
+                    Logout
+                  </Link>
+                )}
+              </nav>
+            </div>
+          </SheetContent>
+        </Sheet>
         <div className="flex items-center gap-4">
           <form onSubmit={handleSearch}>
             <div className="relative">
-              <Input
-                value={searchBy}
-                name="searchBy"
-                onChange={handleChange}
-                placeholder="Search..."
-                type="search"
-              />
-              <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Input
+                  value={searchBy}
+                  name="searchBy"
+                  onChange={handleChange}
+                  placeholder="Search..."
+                  type="search"
+                />
+              <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                {" "}
+              </SearchIcon>
             </div>
           </form>
           <Cart />
         </div>
-      </div>
-      <Button className="md:hidden" size="icon" variant="outline">
-        <MenuIcon className="h-6 w-6" />
-        <span className="sr-only">Toggle navigation</span>
-      </Button>
-    </header>
+      </header>
+    </>
   )
 }

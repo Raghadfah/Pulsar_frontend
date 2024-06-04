@@ -65,8 +65,7 @@ export function Login() {
           placeholder="Email"
           onChange={handleChange}
         />
-        <Link className="text-sm font-medium text-pink-500 hover:underline" to="/profile">
-        </Link>
+        <Link className="text-sm font-medium text-pink-500 hover:underline" to="/profile"></Link>
         <Input
           name="password"
           type="password"
@@ -74,15 +73,15 @@ export function Login() {
           placeholder="Password"
           onChange={handleChange}
         />
-          Forgot password?
+        Forgot password?
         <div className="flex justify-between flex-col">
           <Button className="mt-4">Login</Button>
           <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          Do not have an account?
-          <Link className="font-medium text-pink-500 hover:underline" to="/signup">
-            Sign up
-          </Link>
-        </div>
+            Do not have an account?
+            <Link className="font-medium text-pink-500 " to="/signup">
+              Sign up
+            </Link>
+          </div>
         </div>
       </form>
       <Footer />

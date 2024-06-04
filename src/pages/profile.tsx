@@ -135,7 +135,7 @@ export function Profile() {
               alt="Sofia Davis"
               className="h-30 w-30 rounded-full object-cover"
               height="120"
-              src="images/profile.png"
+              src="images/team.jpg"
               style={{
                 aspectRatio: "120/120",
                 objectFit: "cover"

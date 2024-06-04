@@ -46,7 +46,7 @@ export function Signup() {
   return (
     <div>
       <NavBar />
-      <h3>Sign Up</h3>
+      <h3 className="text-2xl font-bold">Sign Up</h3>
       <p className="text-gray-500 dark:text-gray-400">Create your account to get started.</p>
       <form action="POST" onSubmit={handleSubmit} className="w-full md:w-1/3 mx-auto">
         <Input

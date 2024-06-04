@@ -5,11 +5,13 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
+import { NavBar } from "@/components/ui/navbar"
+import { Footer } from "@/components/ui/footer"
 
 export  function SupportPage() {
   return (
     <div className="flex flex-col min-h-[100dvh]">
-      <header className="bg-[#84052d] text-white py-4 px-6">
+      {/* <header className="bg-[#84052d] text-white py-4 px-6">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <TelescopeIcon />
@@ -36,7 +38,8 @@ export  function SupportPage() {
             <MenuIcon  />
           </button>
         </div>
-      </header>
+      </header> */}
+      <NavBar/>
       <main className="flex-1 py-12 px-4 md:px-6">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
@@ -101,7 +104,8 @@ export  function SupportPage() {
           </Card>
         </div>
       </section>
-      <footer className="bg-[#84052d] text-white py-4 px-6">
+      <Footer/>
+      {/* <footer className="bg-[#84052d] text-white py-4 px-6">
         <div className="container mx-auto flex items-center justify-between">
           <p>&copy; 2024 Pulsar. All rights reserved.</p>
           <nav className="flex items-center space-x-4">
@@ -113,7 +117,7 @@ export  function SupportPage() {
             </Link>
           </nav>
         </div>
-      </footer>
+      </footer> */}
     </div>
   )
 }

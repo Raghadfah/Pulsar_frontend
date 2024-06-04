@@ -19,12 +19,14 @@ import {
 import { Footer } from "@/components/ui/footer"
 import "../Style/backgroundStyle.css"
 import { PageNumber } from "@/components/ui/pageNumber"
+import { useToast } from "@/components/ui/use-toast"
+import { Planet } from "@/components/ui/Planet"
 
 export function Home() {
   const context = useContext(Context)
   if (!context) throw Error("context is missing ")
   const { handleAddToCart, state } = context
-
+  const { toast } = useToast()
   const getProducts = async () => {
     try {
       const res = await api.get("/products")
@@ -61,15 +63,16 @@ export function Home() {
           <img className=" mx-auto pt-[40%] md:w-auto w-1/2 md:pt-[3%]" src="images/planet.gif"></img>
         </div>
       </section>
-      <h2 className="text-2xl uppercase mb-10 font-bold text-[#ffe6b4]">Products</h2>
+      <Planet/>
+      <h2 className="text-2xl uppercase mb-10 font-bold text-[#ffe6b4] mt-20">Products</h2>
       <section className="flex flex-wrap flex-col md:flex-row justify-center max-w-6x1 mx-auto mt-20 gap-4 ">
         {data?.map((product) => {
           const products = state.cart.filter((p) => p.id === product.id)
           const inStock = product.quantity > products.length
 
           return (
-            <div key={product.id} className="card">
-              <Card key={product.id} className="h-full flex flex-col items-center justify-between">
+            <div key={product.id} className="card overflow-hidden">
+              <Card key={product.id} className="h-full flex flex-col items-center justify-between overflow-hidden">
                 <CardHeader>
                   <img alt={product.name} src={product.image} />
                   <CardTitle>{product.name}</CardTitle>
@@ -82,7 +85,7 @@ export function Home() {
                   <Button>
                     <Link to={`/products/${product.id}`}>Details</Link>
                   </Button>
-                  <Button disabled={!inStock} onClick={() => handleAddToCart(product)}>
+                  <Button disabled={!inStock} onClick={() => handleAddToCart(product) } >
                     {inStock ? "Add to cart" : "Out of stock"}
                   </Button>
                 </CardFooter>
