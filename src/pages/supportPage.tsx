@@ -42,7 +42,7 @@ export  function SupportPage() {
       <NavBar/>
       <main className="flex-1 py-12 px-4 md:px-6">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-bold mb-8">```FAQs```</h2>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>What products do you offer?</AccordionTrigger>
