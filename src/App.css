@@ -51,12 +51,13 @@ a {
   line-height: 1.2;
   color: #84052d;
   text-transform: uppercase;
+  text-decoration-style: wavy;
   position: relative;
 }
 
 .text-center-planet {
   padding-top: 8%;
-  font-size: 24px;
+  font-size: 6vw;
   font-weight: bold;
   color: #ffe6b4;
   overflow: hidden;
