@@ -39,7 +39,8 @@ a {
   font-size: 4rem;
   line-height: 1.2;
   color: #7c7d81;
-  font-size: 6vw;
+  /* font-size: 6vw; */
+  font-size: 20px;
   line-height: 1;
   text-transform: uppercase;
   font-weight: bold;
@@ -47,7 +48,8 @@ a {
 }
 
 .hero-content .highlight {
-  font-size: 4rem;
+  /* font-size: 4rem; */
+  font-size: 20px;
   line-height: 1.2;
   color: #84052d;
   text-transform: uppercase;
